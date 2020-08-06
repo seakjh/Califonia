@@ -1,84 +1,82 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="ko">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Hotel</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<%@include file="./include/head.jsp" %>
-	<script type="text/babel">
-	$(function(){
-		
-	});
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Hotel</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<%@include file="./include/head.jsp" %>
+<script type="text/babel">
+$(function(){
 	
-	function reserve(){
-		//예약 요청 
-		$.ajax({
-			url:"/rest/room",
-			type:"get",
-			success:function(result){
-				alert(result);
-				showRoom();
-			}
-		});
-	}
-	
-	//예약 가능한 방을 출력한다 
-	function showRoom(){
-		class RoomTable extends React.Component{
-			render(){
-				var row = [];
-				//데이터 쌓기
-				for(var i=0;i<6;i++){ 
-					row.push(
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="single-room mb-50">
-                            <div class="room-img">
-                               <a href="rooms.html"><img src="/resources/assets/img/rooms/room1.jpg" alt=""/></a>
-                            </div>
-                            <div class="room-caption">
-                                <h3><a href="rooms.html">Classic Double Bed</a></h3>
-                                <div class="per-night">
-                                    <span><u>$</u>150 <span>/ par night</span></span>
-                                </div>
-                            </div>
-                        </div>
-					</div>
-					)	
-				}
-				return(
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-8">
-                        
-                        <div class="font-back-tittle mb-45">
-                            <div class="archivment-front">
-                                <h3>Result </h3>
-                            </div>
-                            <h3 class="archivment-back">Our Rooms</h3>
-                        </div>
-                    </div>
-                </div>
+});
 
-                <div class="row" id="roomContainer">
-						{row}
-                </div>
-				</div>
-                )
-			};			
+function reserve(){
+	//예약 요청 
+	$.ajax({
+		url:"/rest/room",
+		type:"get",
+		success:function(result){
+			alert(result);
+			showRoom();
 		}
+	});
+}
 
-        ReactDOM.render( <RoomTable/>, $(".room-area")[0]);
+//예약 가능한 방을 출력한다 
+function showRoom(){
+	class RoomTable extends React.Component{
+		render(){
+			var row = [];
+               var roomImg = ["room1.jpg", "room2.jpg", "room3.jpg", "room4.jpg", "room5.jpg", "room6.jpg"];
+			//데이터 쌓기
+			for(var i=0;i<6;i++){ 
+				row.push(
+                   <div class="col-xl-4 col-lg-6 col-md-6">
+                       <div class="single-room mb-50">
+                           <div class="room-img">
+                              <a href="rooms.html"><img src={"/resources/assets/img/rooms/"+roomImg[i]} alt=""/></a>
+                           </div>
+                           <div class="room-caption">
+                               <h3><a href="rooms.html">Classic Double Bed</a></h3>
+                               <div class="per-night">
+                                   <span><u>$</u>150 <span>/ par night</span></span>
+                               </div>
+                           </div>
+                       </div>
+				</div>
+				)	
+			}
+			return(
+           <div class="container">
+               <div class="row justify-content-center">
+                   <div class="col-xl-8">
+                       
+                       <div class="font-back-tittle mb-45">
+                           <div class="archivment-front">
+                               <h3>Result </h3>
+                           </div>
+                           <h3 class="archivment-back">Our Rooms</h3>
+                       </div>
+                   </div>
+               </div>
+
+               <div class="row" id="roomContainer">
+					{row}
+               </div>
+			</div>
+               )
+		};			
 	}
-	
-	
-	</script>
-   </head>
 
-   <body>
+       ReactDOM.render( <RoomTable/>, $(".room-area")[0]);
+}
+</script>
+</head>
+
+<body>
        
     <!-- Preloader Start -->
     <div id="preloader-active">
@@ -109,7 +107,7 @@
                         <div class="row justify-content-center text-center">
                             <div class="col-xl-9">
                                 <div class="h1-slider-caption">
-                                    <h1 data-animation="fadeInUp" data-delay=".4s">top hotel in the city</h1>
+                                    <h1 data-animation="fadeInUp" data-delay=".4s">Hotel Califonia</h1>
                                     <h3 data-animation="fadeInDown" data-delay=".4s">Hotel & Resourt</h3>
                                 </div>
                             </div>
@@ -117,7 +115,7 @@
                     </div>
                 </div>
                 
-                <div class="single-slider  hero-overly slider-height d-flex align-items-center" data-background="/resources/assets/img/hero/h1_hero.jpg" >
+                <!-- <div class="single-slider  hero-overly slider-height d-flex align-items-center" data-background="/resources/assets/img/hero/h1_hero.jpg" >
                     <div class="container">
                         <div class="row justify-content-center text-center">
                             <div class="col-xl-9">
@@ -141,7 +139,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 
             </div>
             
