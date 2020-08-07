@@ -44,18 +44,7 @@ public class TopCategoryController {
 	@ResponseBody
 	public List<TopCategory> selectAll() {
 		List<TopCategory> categoryList = topCategoryService.selectAll();
-		/*
-		 * StringBuilder sb = new StringBuilder(); sb.append("{");
-		 * sb.append("\"categoryList\":["); for(int i=0;i<categoryList.size();i++) {
-		 * TopCategory topCategory = categoryList.get(i); sb.append("{");
-		 * sb.append("\"topCategory_id\":"+topCategory.getTopCategory_id()+",");
-		 * sb.append("\"name\":\""+topCategory.getName()+"\",");
-		 * sb.append("\"price\":"+topCategory.getPrice());
-		 * sb.append("\"detail\":\""+topCategory.getDetail()+"\",");
-		 * if(i<categoryList.size()-1) { sb.append("},"); }else { sb.append("}"); } }
-		 * sb.append("]"); sb.append("}");
-		return sb.toString();
-		 */		
+
 		return categoryList;
 	}
 	

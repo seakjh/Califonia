@@ -79,7 +79,7 @@ function getList() {
         url:"/category/list",
         type:"get",
         success:function(result) {
-            alert(result.length);            
+            //alert(result.length);            
             printData(result);
         }
     });
@@ -94,7 +94,7 @@ function printData(jsonArray){
 				row.push(
 					<tr>						
 						<td>{category.topCategory_id}</td>
-						<td>{category.name}</td>
+						<td><a href={"/category/detail?topCategory_id="+category.topCategory_id}>{category.name}</a></td>
 						<td>{category.price}</td>
 						<td>{category.detail}</td>
 					</tr>
