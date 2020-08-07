@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OracleTopCategory">
+
+<!-- 	<resultMap type="TopCategory" id="categoryMap">
+		<id column="topcategory_id" property="topCategory_id"/>	
+		<result column="name" property="name"/>
+		<result column="price" property="price"/>
+		<result column="detail" property="detail"/>
+	</resultMap>	 -->
+
+	<select id="selectAll" resultType="TopCategory">
+		select * 	from topcategory
+	</select>
+	
+	<!-- 한건 가져오기  -->
+	<select id="select" parameterType="int" resultType="TopCategory">
+		select * from topcategory 
+		where topcategory_id=#{topcategory_id}
+	</select>	
+	
+	<insert id="insert" parameterType="TopCategory">
+		insert into topcategory(topcategory_id, name, price, detail)
+		values(seq_category.nextval, #{name}, #{price}, #{detail})
+	</insert>
+	
+	<update id="update" parameterType="TopCategory">
+		update topcategory set name=#{name}, price=#{price}, detail=#{detail}
+		where topcategory_id=#{topcategory_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from topcategory 
+		where topcategory_id=#{topcategory_id}
+	</delete>	
+
+</mapper>

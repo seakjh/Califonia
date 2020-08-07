@@ -1,7 +1,6 @@
-<%@page import="com.hotel.domain.Admin"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	Admin admin=(Admin)session.getAttribute("admin");
+	//Admin admin=(Admin)session.getAttribute("admin");
 %>
 
 <header>
@@ -13,7 +12,7 @@
 					<!-- logo -->
 					<div class="col-xl-2 col-lg-2">
 						<div class="logo">
-							<a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>
+							<a href="/"><img src="/resources/assets/img/logo/logo.png" alt=""></a>
 						</div>
 					</div>
 					<div class="col-xl-8 col-lg-8">
@@ -21,10 +20,10 @@
 						<div class="main-menu f-right d-none d-lg-block">
 							<nav>
 								<ul id="navigation">
-									<li><a href="/admin/category/index.jsp">카테고리 관리</a></li>
-									<li><a href="/member/myinfo.jsp">예약주문정보</a></li>
+									<li><a href="/admin/category">카테고리 관리</a></li>
 									<li><a href="/contact/contact.jsp">방관리</a></li>
 									<li><a href="/reserve/reserveTable.jsp">서비스관리</a></li>
+									<li><a href="/member/myinfo.jsp">예약주문정보</a></li>
 									<li><a href="/admin/member/list">회원정보</a></li>
 									<li><a href="/member/myinfo.jsp">고객센터</a></li>
 								</ul>

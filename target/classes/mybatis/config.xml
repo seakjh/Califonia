@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.hotel.app.domain.TopCategory" alias="TopCategory"/>
+	</typeAliases>
+	<mappers>
+		<!-- oracle 용 Mapper  -->
+		<mapper resource="mybatis/oracle/BoardMapper.xml"/>
+		<mapper resource="mybatis/oracle/TopCategoryMapper.xml"/>
+		
+		<!-- mysql 용 Mapper  -->
+		<mapper resource="mybatis/mysql/BoardMapper.xml"/>
+		
+	</mappers>
+</configuration>
+
+
+
+
+
+
+

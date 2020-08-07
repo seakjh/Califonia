@@ -4,11 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/css/admin.css"/>
+<link rel="stylesheet" href="/resources/assets/css/admin.css"/>
+<%@include file="../inc/head.jsp"%>
 <style>
 select{
 	width:200px;
 	height:150px;
+	display: block !important;
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -90,8 +92,9 @@ function del(){
 }
 </script>
 </head>
-<body bgcolor="yellow">
-<%@include file="/admin/inc/main_navi.jsp"%>
+<body>
+
+<%@include file="../inc/header.jsp"%>
 <div>
 	<input type="text" name="category_name" placeholder="카테고리 입력"/>
 	<button>등록</button>
@@ -103,6 +106,7 @@ function del(){
 	<button>삭제</button>
 	<button>목록</button>
 </div>
+<%@include file="../inc/footer.jsp"%>
 </body>
 </html>
 
