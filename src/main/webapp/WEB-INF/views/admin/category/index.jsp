@@ -1,4 +1,6 @@
+<%@page import="com.hotel.app.domain.TopCategory"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,99 +14,140 @@ select{
 	height:150px;
 	display: block !important;
 }
+button {
+	background: #dca73a;
+	border: 1px solid #fff;
+	color: #fff;
+	border-radius: 5px;
+	font-weight: 400;
+	cursor: pointer;
+}
+button:hover {
+	background: #f1b233;
+}
+.marginAll{
+	margin-top: 60px;
+	margin-bottom: 60px;
+	background: #ffffee;
+}
+
+.listArea{
+
+}
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
+<script type="text/babel">
 $(function(){
+	getList();
 	
 	$($("button")[0]).click(function(){//등록
 		regist();
 	});
 	
-	$($("button")[1]).click(function(){//수정
+	$($("button")[1]).click(function(){//목록
+		getList();
+	});	
+
+	$($("button")[2]).click(function(){//수정
 		edit();
 	});
 	
-	$($("button")[2]).click(function(){//삭제
+	$($("button")[3]).click(function(){//삭제
 		del();
 	});
 	
-	$($("button")[3]).click(function(){//삭제
-		getList();
-	});	
 });
 
-//jquery가ajax 도 지원한다!!
-//기존의 순수 자바스크립트를 이용하는 것보다 코드량이 현저히 줄어든다
-function regist(){
+function regist() {
 	$.ajax({
-		"url":"/category/regist",
-		"type":"post",
-		"data":{
-			category_name:$("input[name='category_name']").val()
+		url:"/category/regist",
+		type:"post",
+		data:{
+			name:$($("input[name='name']")[0]).val(),
+			price:$($("input[name='price']")[0]).val(),
+			detail:$($("textarea[name='detail']")[0]).val()
 		},
-		success:function(data){
-			alert("서버에서 온 응답 데이터는 "+data);
-			
-			//리스트 보여주기!!
-			
+		success: function (result) {
+			alert(result);
+			getList();
 		}
-	});	
+	});
 }
 
-//비동기로 데이터 가져오기!
-function getList(){
-	$.ajax({
-		"url":"/category/list",
-		"type":"get",
-		success:function(result){
-			console.log(result);	
-			
-			var json=JSON.parse(result);
-			
-			$("select").empty(); //비우기!
-			
-			for(var i=0;i<json.categoryList.length;i++){
-				var obj=json.categoryList[i];
-				$("select").append("<option value='"+obj.category_id+"'>"+obj.category_name+"</option>");
-			}
-		}
-	});	
+//목록 가져와서 테이블에 출력!
+function getList() {
+    $.ajax({
+        url:"/category/list",
+        type:"get",
+        success:function(result) {
+            alert(result.length);            
+            printData(result);
+        }
+    });
 }
-
-//비동기로 삭제하기!!
-function del(){
-	if(confirm($("select").val()+"를 삭제하실래요?")){
-		$.ajax({
-			"url":"/category/del?category_id="+$("select").val(),
-			"type":"get",
-			success:function(result){
-				if(result==1){
-					alert("삭제되었습니다.");
-					getList();
-				} else{
-					alert("삭제에 실패하였습니다.\n관리자에 문의하세요");
-				}
+function printData(jsonArray){
+	class CategoryTable extends React.Component{
+		render(){
+			var row=[];
+			
+			for(var i=0;i<jsonArray.length;i++){
+				var category=jsonArray[i];
+				row.push(
+					<tr>						
+						<td>{category.topCategory_id}</td>
+						<td>{category.name}</td>
+						<td>{category.price}</td>
+						<td>{category.detail}</td>
+					</tr>
+				)
 			}
-		});	
+			return (
+				<table width="100%" border="1px">		
+					<tr>
+						<td>고유번호</td>
+						<td>이름</td>
+						<td>가격</td>
+						<td>설명</td>
+					</tr>
+					{row}					
+				</table>
+			)	
+		}
 	}
-	
+	ReactDOM.render( <CategoryTable/>, $("#tableArea")[0]);
 }
 </script>
 </head>
 <body>
 
 <%@include file="../inc/header.jsp"%>
-<div>
-	<input type="text" name="category_name" placeholder="카테고리 입력"/>
-	<button>등록</button>
-	
-	<p>
-		<select name="category_id" multiple="multiple"></select>
-	<p/>
-	<button>수정</button>
-	<button>삭제</button>
-	<button>목록</button>
+<div class="container marginAll">
+	<div class="row">
+		<div class="col-lg-3" id="registArea">
+			<form>
+				<input type="text" name="name" placeholder="카테고리 입력"/>
+				<br>
+				<input type="text" name="price" placeholder="가격 입력"/>
+				<br>
+				<textarea rows="3" cols="25" name="detail" placeholder="설명 입력"></textarea>
+				<br>
+			</form>
+			<button>등록</button>
+			<button>목록</button>
+		</div>
+		<div class="col-lg-6" id="contentArea">
+			<div id="tableArea"></div>
+		</div>
+		<div class="col-lg-3" id="infoArea">
+			<input type="text" name="name"/>
+			<br>
+			<input type="text" name="price"/>
+			<br>
+			<textarea rows="3" cols="25" name="detail"></textarea>
+			<br>
+			<button>수정</button>
+			<button>삭제</button>
+		</div>
+	</div>
 </div>
 <%@include file="../inc/footer.jsp"%>
 </body>
