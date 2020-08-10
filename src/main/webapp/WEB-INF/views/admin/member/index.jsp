@@ -67,9 +67,7 @@ function regist() {
 			detail:$($("textarea[name='detail']")[0]).val()
 		},
 		success: function (result) {
-			$($("input[name='name']")[0]).val();
-			$($("input[name='price']")[0]).val();
-			$($("textarea[name='detail']")[0]).val();
+			alert(result);
 			getList();
 		}
 	});
@@ -86,25 +84,22 @@ function getList() {
         }
     });
 }
-
 function printData(jsonArray){
 	class CategoryTable extends React.Component{
 		render(){
 			var row=[];
 			
-			for(var i=0;i<this.props.records.length;i++){
-				var category=this.props.records[i];
-				
+			for(var i=0;i<jsonArray.length;i++){
+				var category=jsonArray[i];
 				row.push(
-					<tr>						
+					<tr onClick={getDetail(category.topCategory_id)}>						
 						<td>{category.topCategory_id}</td>
-						<td onClick={getDetail(category.topCategory_id)}>{category.name}</td>
+						<td>{category.name}</td>
 						<td>{category.price}</td>
 						<td>{category.detail}</td>
 					</tr>
 				)
 			}
-				
 			return (
 				<table width="100%" border="1px">		
 					<tr>
@@ -118,27 +113,22 @@ function printData(jsonArray){
 			)	
 		}
 	}
-	ReactDOM.render( <CategoryTable records={jsonArray}/>, $("#tableArea")[0]);
+	ReactDOM.render( <CategoryTable/>, $("#tableArea")[0]);
 }
-const getDetail=(topCategory_id)=>()=> {
+function getDetail(topCategory_id) {
 	$.ajax({
 		url:"/category/detail",
-		type:"get",
+		type:"post",
 		data:{
 			topCategory_id:topCategory_id
 		},
 		success:function(result) {
-			//alert("결과는 	"+result.name);
-			$("input[name='topCategory_id']").val(topCategory_id);
-			$($("input[name='name']")[1]).val(result.name);
-			$($("input[name='price']")[1]).val(result.price);
-			$($("textarea[name='detail']")[1]).val(result.detail);
+			$("input[name='topCategory_id']").val(result[0].topCategory_id);
+			$($("input[name='name']")[1]).val(result[0].name);
+			$($("input[name='price']")[1]).val(result[0].price);
+			$($("textarea[name='detail']")[1]).val(result[0].detail);
 		}
 	});
-}
-
-function del() {
-	
 }
 </script>
 </head>

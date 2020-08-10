@@ -21,11 +21,16 @@
 							<nav>
 								<ul id="navigation">
 									<li><a href="/admin/category">카테고리 관리</a></li>
-									<li><a href="/contact/contact.jsp">방관리</a></li>
-									<li><a href="/reserve/reserveTable.jsp">서비스관리</a></li>
-									<li><a href="/member/myinfo.jsp">예약주문정보</a></li>
-									<li><a href="/admin/member/list">회원정보</a></li>
-									<li><a href="/member/myinfo.jsp">고객센터</a></li>
+									<li><a href="/admin/room/list">방관리</a></li>
+									<li> <a href="#">옵션</a>
+										<ul class="submenu">
+											<li><a href="/admin/bedoption">침대옵션관리</a></li>
+											<li><a href="/admin/service">서비스관리</a></li>											
+										</ul>
+									</li>
+									<li><a href="/admin/reserve">예약주문정보</a></li>
+									<li><a href="/admin/member">회원정보</a></li>
+									<li><a href="/admin/cs">고객센터</a></li>
 								</ul>
 							</nav>
 						</div>

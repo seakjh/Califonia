@@ -8,16 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotel.app.aop.exception.DMLException;
-import com.hotel.app.controller.admin.AdminController;
 import com.hotel.app.domain.TopCategory;
 import com.hotel.app.model.topcategory.TopCategoryService;
-
 
 @Controller
 public class TopCategoryController {
@@ -35,12 +34,12 @@ public class TopCategoryController {
 	@RequestMapping(value="/category/regist", method=RequestMethod.POST)
 	@ResponseBody
 	public String regist(TopCategory topCategory) {
-		System.out.println("파라미터값:"+topCategory.getName());
+		System.out.println("이름 : "+topCategory.getName());
 		topCategoryService.insert(topCategory);
 		return "1";
 	}
 	
-	@RequestMapping(value="/category/list",method=RequestMethod.GET,produces="application/json;charset=utf8")
+	@RequestMapping(value="/category/list",method=RequestMethod.GET, produces="application/json;charset=utf8")
 	@ResponseBody
 	public List<TopCategory> selectAll() {
 		List<TopCategory> categoryList = topCategoryService.selectAll();
@@ -50,9 +49,10 @@ public class TopCategoryController {
 	
 	@RequestMapping(value = "/category/detail", method = RequestMethod.GET)
 	@ResponseBody
-	public String select(@RequestParam int topCategory_id) {
-		topCategoryService.select(topCategory_id);
-		return "1";
+	public TopCategory select(@RequestParam("topCategory_id") int topCategory_id) {
+		logger.info("id : "+topCategory_id);
+		System.out.println(topCategoryService.select(topCategory_id));
+		return topCategoryService.select(topCategory_id);
 	}
 
 	@RequestMapping(value = "/category/edit", method = RequestMethod.GET)
@@ -64,9 +64,9 @@ public class TopCategoryController {
 	
 	@RequestMapping(value="/category/del",method=RequestMethod.GET)
 	@ResponseBody
-	public String delete(@RequestParam("category_id") int category_id) {
-		System.out.println(category_id);
-		topCategoryService.delete(category_id);
+	public String delete(@RequestParam("topCategory_id") int topCategory_id) {
+		System.out.println(topCategory_id);
+		topCategoryService.delete(topCategory_id);
 		return "1";
 	}
 	
