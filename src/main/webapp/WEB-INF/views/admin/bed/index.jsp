@@ -8,26 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/assets/css/admin.css"/>
 <%@include file="../inc/head.jsp"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 <style>
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-  border: 1px solid #ddd;
-}
-
-th, td {
-  text-align: left;
-  padding: 16px;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
 select{
 	width:200px;
 	height:150px;
@@ -47,12 +28,14 @@ button:hover {
 .marginAll{
 	margin-top: 60px;
 	margin-bottom: 60px;
+	background: #ffffee;
 }
 
 .listArea{
 
 }
 </style>
+
 <script type="text/babel">
 $(function(){
 	getList();
@@ -63,17 +46,37 @@ $(function(){
 	
 	$($("button")[1]).click(function(){//목록
 		getList();
+	});	
+
+	$($("button")[2]).click(function(){//수정
+		edit();
 	});
+	
+	$($("button")[3]).click(function(){//삭제
+		del();
+	});
+	
 });
 
 function regist() {
-	location.href="/room/registRoom";
+	$.ajax({
+		url:"/bed/regist",
+		type:"post",
+		data:{
+			name:$($("input[name='name']")[0]).val(),
+		},
+		success: function (result) {
+			alert(result);
+			getList();
+			$($("input[name='name']")[0]).val("");
+		}
+	});
 }
 
 //목록 가져와서 테이블에 출력!
 function getList() {
     $.ajax({
-        url:"/category/list",
+        url:"/bed/list",
         type:"get",
         success:function(result) {
             //alert(result.length);            
@@ -82,65 +85,84 @@ function getList() {
     });
 }
 function printData(jsonArray){
-	class CategoryTable extends React.Component{
+	class BedTable extends React.Component{
 		render(){
 			var row=[];
 			
-			for(var i=0;i<jsonArray.length;i++){
-				var category=jsonArray[i];
+			for(var i=0;i<this.props.records.length;i++){
+				var bed =this.props.records[i];
+				
 				row.push(
-					<tr onClick={getDetail(category.topCategory_id)}>						
-						<td>{category.topCategory_id}</td>
-						<td>{category.name}</td>
-						<td>{category.price}</td>
-						<td>{category.detail}</td>
+					<tr>						
+						<td>{bed.bed_option_id}</td>
+						<td onClick={getDetail(bed.bed_option_id)}>{bed.name}</td>
 					</tr>
 				)
 			}
+				
 			return (
 				<table width="100%" border="1px">		
 					<tr>
 						<td>고유번호</td>
 						<td>이름</td>
-						<td>가격</td>
-						<td>설명</td>
 					</tr>
 					{row}					
 				</table>
 			)	
 		}
 	}
-	ReactDOM.render( <CategoryTable/>, $("#tableArea")[0]);
+	ReactDOM.render( <BedTable records={jsonArray}/>, $("#tableArea")[0]);
 }
-function getDetail(topCategory_id) {
+const getDetail=(bed_option_id)=>()=> {
 	$.ajax({
-		url:"/category/detail",
-		type:"post",
+		url:"/bed/detail",
+		type:"get",
 		data:{
-			topCategory_id:topCategory_id
+			bed_option_id:bed_option_id
 		},
 		success:function(result) {
-			$("input[name='topCategory_id']").val(result[0].topCategory_id);
-			$($("input[name='name']")[1]).val(result[0].name);
-			$($("input[name='price']")[1]).val(result[0].price);
-			$($("textarea[name='detail']")[1]).val(result[0].detail);
+			//alert("결과는 	"+result.name);
+			$("input[name='bed_option_id']").val(bed_option_id);
+			$($("input[name='name']")[1]).val(result.name);
 		}
 	});
 }
+
+function del() {
+	
+}
 </script>
+
 </head>
 <body>
 
 <%@include file="../inc/header.jsp"%>
 <div class="container marginAll">
 	<div class="row">
-		<div class="col-lg-12" id="contentArea">
+		<div class="col-lg-3" id="registArea">
+			<form>
+				<input type="text" name="name" placeholder="방의 옵션 입력"/>
+				<br>
+			</form>
+			<button>등록</button>
+			<button>목록</button>
+		</div>
+		<div class="col-lg-6" id="contentArea">
 			<div id="tableArea"></div>
+		</div>
+		<div class="col-lg-3" id="infoArea">
+			<input type="hidden" name="serviceOption_id">
+			<input type="text" name="name"/>
 			<br>
-			<button>방 등록</button>
+			<button>수정</button>
+			<button>삭제</button>
 		</div>
 	</div>
 </div>
 <%@include file="../inc/footer.jsp"%>
 </body>
 </html>
+
+
+
+

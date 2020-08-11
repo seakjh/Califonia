@@ -17,21 +17,21 @@
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">                                                                                                                                     
-                                        <li><a href="/">Home</a></li>
+                                        <li><a href="/">소개</a></li>
                                         <li><a href="/reserve/reserveTable.jsp">예약정보</a></li>
-                                        <li><a href="/member/myinfo.jsp">내정보</a></li>
-                                        <!-- <li><a href="blog.html">Blog</a>
+                                        <li><a href="/member/myinfo.jsp">MyPage</a></a>
                                             <ul class="submenu">
-                                                <li><a href="blog.html">Blog</a></li>
-                                                <li><a href="single-blog.html">Blog Details</a></li>
+                                                <li><a href="#">내정보</a></li>
+                                                <li><a href="#">예약정보</a></li>
                                             </ul>
                                         </li>
+                                        <!-- 
                                         <li><a href="#">Pages</a>
                                             <ul class="submenu">
                                                 <li><a href="rooms.html">Rooms</a>
                                                 <li><a href="elements.html">Element</a></li>
                                             </ul>
-                                        </li> -->
+                                        </li>-->
                                         <li><a href="/contact/contact.jsp">Contact</a></li>
                                     </ul>
                                 </nav>

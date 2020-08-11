@@ -3,6 +3,7 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
 
+
 <!-- CSS here -->
 <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/assets/css/owl.carousel.min.css">
@@ -13,7 +14,7 @@
 <link rel="stylesheet" href="/resources/assets/css/fontawesome-all.min.css">
 <link rel="stylesheet" href="/resources/assets/css/themify-icons.css">
 <link rel="stylesheet" href="/resources/assets/css/slick.css">
-<link rel="stylesheet" href="/resources/assets/css/nice-select.css">
+<!-- <link rel="stylesheet" href="/resources/assets/css/nice-select.css"> -->
 <link rel="stylesheet" href="/resources/assets/css/style.css">
 <link rel="stylesheet" href="/resources/assets/css/responsive.css">
 

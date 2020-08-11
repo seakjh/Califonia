@@ -1,4 +1,4 @@
-package com.hotel.app.model.serviceoption;
+package com.hotel.app.model.service;
 
 import java.util.List;
 

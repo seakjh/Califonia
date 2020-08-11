@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotel.app.aop.exception.DMLException;
 import com.hotel.app.domain.ServiceOption;
-import com.hotel.app.model.serviceoption.ServiceOptionService;
+import com.hotel.app.model.service.ServiceOptionService;
 
 @Controller
 public class ServiceController {

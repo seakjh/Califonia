@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OracleBedOption">
+
+	<select id="selectAll" resultType="BedOption">
+		select * 	from bed_option order by bed_option_id desc
+	</select>
+	
+	<select id="select" parameterType="int" resultType="BedOption">
+		select * from bed_option 
+		where bed_option_id=#{bed_option_id}
+	</select>	
+	
+	<insert id="insert" parameterType="BedOption">
+		insert into bed_option(bed_option_id, name)
+		values(seq_bed_option.nextval, #{name})
+	</insert>
+	
+	<update id="update" parameterType="BedOption">
+		update bed_option set name=#{name}
+		where bed_option_id=#{bed_option_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from bed_option 
+		where bed_option_id=#{bed_option_id}
+	</delete>		
+	
+</mapper>
+
+
+
+
+
+

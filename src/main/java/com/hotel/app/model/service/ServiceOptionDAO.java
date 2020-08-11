@@ -1,10 +1,12 @@
-package com.hotel.app.model.serviceoption;
+package com.hotel.app.model.service;
 
 import java.util.List;
 
 import com.hotel.app.domain.ServiceOption;
 
-public interface ServiceOptionService {
+
+
+public interface ServiceOptionDAO {
 	public List selectAll();
 	public ServiceOption select(int service_option_id);
 	public void insert(ServiceOption serviceOption);

@@ -21,10 +21,10 @@
 							<nav>
 								<ul id="navigation">
 									<li><a href="/admin/category">카테고리 관리</a></li>
-									<li><a href="/admin/room/list">방관리</a></li>
+									<li><a href="/admin/room">방관리</a></li>
 									<li> <a href="#">옵션</a>
 										<ul class="submenu">
-											<li><a href="/admin/bedoption">침대옵션관리</a></li>
+											<li><a href="/admin/bed">침대옵션관리</a></li>
 											<li><a href="/admin/service">서비스관리</a></li>											
 										</ul>
 									</li>

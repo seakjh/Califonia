@@ -106,7 +106,7 @@
 
 		<!-- Scrollup, nice-select, sticky -->
         <script src="/resources/assets/js/jquery.scrollUp.min.js"></script>
-        <script src="/resources/assets/js/jquery.nice-select.min.js"></script>
+        <!-- <script src="/resources/assets/js/jquery.nice-select.min.js"></script> -->
 		<script src="/resources/assets/js/jquery.sticky.js"></script>
         
         <!-- contact js -->
