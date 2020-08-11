@@ -62,7 +62,7 @@
 	</tx:advice> 	
  	
 	<aop:config>
-		<aop:pointcut expression="execution(public * com.hotel.app.model..*ServiceImpl.*(..))" 
+		<aop:pointcut expression="execution(public * com.hotel.app.model.*.*(..))" 
 			id="serviceMethod"/>		
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
 	</aop:config> 	
