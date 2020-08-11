@@ -55,7 +55,7 @@ $(function(){
 	
 	//목록
 	$($("button")[1]).click(function(){
-		location.href="/admin/room/list";
+		location.href="/admin/room";
 	});
 	
 });
@@ -77,7 +77,6 @@ function getCategoryList(){
 
 //파일 업로드 요청 (동기방식)
 function regist(){
-	alert();
 	$("form").attr({
 		"action":"/admin/room/regist",
 		"enctype":"multipart/form-data",
@@ -92,14 +91,13 @@ function regist(){
 
 	<div class="container">
 		<form name="form1">
-			<input type="hidden" 	name="room_id" value=""> 
 			<select id="topCategory_id" class="form-control" style="display: block;">
 				<option value="0">카테고리 선택</option>
 			</select>
 			<input type="text" 	name="name" placeholder="방이름"> 
 			<input type="text" name="max_number" placeholder="최대 인원수"> 
 			<input type="text" name="room_size" placeholder="방 크기"> 
-			<input type="file" name="filename">
+			<input type="file" name="myFile">
 		</form>
 		<br>
 		<button class="btn btn-warning">등록</button>

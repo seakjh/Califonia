@@ -4,11 +4,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hotel.app.aop.exception.DMLException;
+import com.hotel.app.aop.exception.FileException;
+import com.hotel.app.common.file.FileManager;
 import com.hotel.app.domain.Room;
+import com.hotel.app.domain.SubCategory;
+import com.hotel.app.model.subcategory.SubCategoryDAO;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -16,6 +22,13 @@ public class RoomServiceImpl implements RoomService {
 	@Inject
 	@Qualifier("oracleRoomDAO")
 	private RoomDAO roomDAO;
+
+	@Inject
+	@Qualifier("oracleSubCategoryDAO")
+	private SubCategoryDAO subCategoryDAO;
+	
+	@Autowired(required=false)
+	private FileManager fileManager;
 	
 	@Override
 	public List selectAll() {
@@ -28,8 +41,14 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public void insert(Room room) throws DMLException {
+	public void insert(SubCategory subCategory, MultipartFile myFile, String realPath) throws DMLException, FileException {
+		Room room = subCategory.getRoom();
+		
+		String filename = FileManager.saveFile(myFile, realPath);
+		room.setFilename(filename);
+		
 		roomDAO.insert(room);
+		subCategoryDAO.insert(subCategory);
 	}
 
 	@Override

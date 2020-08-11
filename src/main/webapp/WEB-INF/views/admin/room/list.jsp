@@ -1,6 +1,5 @@
 <%@page import="com.hotel.app.domain.TopCategory"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,20 +59,16 @@ $(function(){
 	$($("button")[0]).click(function(){//등록
 		regist();
 	});
-	
-	$($("button")[1]).click(function(){//목록
-		getList();
-	});
 });
 
 function regist() {
-	location.href="/room/registRoom";
+	location.href="/admin/room/registRoom";
 }
 
 //목록 가져와서 테이블에 출력!
 function getList() {
     $.ajax({
-        url:"/category/list",
+        url:"/admin/room/list",
         type:"get",
         success:function(result) {
             //alert(result.length);            
@@ -87,13 +82,13 @@ function printData(jsonArray){
 			var row=[];
 			
 			for(var i=0;i<jsonArray.length;i++){
-				var category=jsonArray[i];
+				var room=jsonArray[i];
 				row.push(
-					<tr onClick={getDetail(category.topCategory_id)}>						
-						<td>{category.topCategory_id}</td>
-						<td>{category.name}</td>
-						<td>{category.price}</td>
-						<td>{category.detail}</td>
+					<tr onClick={getDetail(room.room_id)}>						
+						<td>{room.topCategory_id}</td>
+						<td>{room.name}</td>
+						<td>{room.price}</td>
+						<td>{room.detail}</td>
 					</tr>
 				)
 			}

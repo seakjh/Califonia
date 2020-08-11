@@ -18,7 +18,7 @@
                                 <nav>
                                     <ul id="navigation">                                                                                                                                     
                                         <li><a href="/">소개</a></li>
-                                        <li><a href="/reserve/reserveTable.jsp">예약정보</a></li>
+                                        <li><a href="/reserve/reserveTable.jsp">객실정보</a></li>
                                         <li><a href="/member/myinfo.jsp">MyPage</a></a>
                                             <ul class="submenu">
                                                 <li><a href="#">내정보</a></li>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OracleSubCategory">
+
+	<select id="selectAll" resultType="SubCategory">
+		select * 	from subcategory order by subcategory_id desc
+	</select>
+	
+	<select id="select" parameterType="int" resultType="SubCategory">
+		select * from subcategory 
+		where subcategory_id=#{subcategory_id}
+	</select>	
+	
+	<insert id="insert" parameterType="SubCategory">
+		insert into subcategory(subcategory_id, name, price, detail)
+		values(seq_subcategory.nextval, #{name}, #{price}, #{detail})
+	</insert>
+	
+	<update id="update" parameterType="SubCategory">
+		update subcategory set name=#{name}, price=#{price}, detail=#{detail}
+		where subcategory_id=#{subcategory_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from subcategory 
+		where subcategory_id=#{subcategory_id}
+	</delete>	
+
+</mapper>

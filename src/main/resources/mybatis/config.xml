@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.hotel.app.domain.TopCategory" alias="TopCategory"/>
+		<typeAlias type="com.hotel.app.domain.SubCategory" alias="SubCategory"/>
 		<typeAlias type="com.hotel.app.domain.ServiceOption" alias="ServiceOption"/>
 		<typeAlias type="com.hotel.app.domain.Room" alias="Room"/>
 		<typeAlias type="com.hotel.app.domain.Reservation" alias="Reservation"/>
@@ -14,11 +15,12 @@
 	</typeAliases>
 	<mappers>
 		<!-- oracle 용 Mapper  -->
-		<mapper resource="mybatis/oracle/BoardMapper.xml"/>
 		<mapper resource="mybatis/oracle/TopCategoryMapper.xml"/>
+		<mapper resource="mybatis/oracle/SubCategoryMapper.xml"/>
 		<mapper resource="mybatis/oracle/ServiceOptionMapper.xml"/>
 		<mapper resource="mybatis/oracle/BedOptionMapper.xml"/>
 		<mapper resource="mybatis/oracle/RoomMapper.xml"/>
+		<mapper resource="mybatis/oracle/BoardMapper.xml"/>
 		
 		<!-- mysql 용 Mapper  -->
 		<mapper resource="mybatis/mysql/BoardMapper.xml"/>

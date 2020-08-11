@@ -9,9 +9,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 스프링 jdbc 는 jndi를 접근할 수 있다  -->	
 	<jee:jndi-lookup
 		id="oracleSource" 
 		jndi-name="jdbc/oracle" 
@@ -22,11 +24,17 @@
 		jndi-name="jdbc/mysql" 
 		resource-ref="true"/>		
 		
+	<!-- 스프링 jdbc를 사용하는 이유는 트랜잭션 등을 지원하기 때문이므로
+	 지금 사용중인 퍼스스턴스 영역의 기술에 따라 알맞는 트랜잭션 매니져를 
+	 등록해야 한다..
+	 jdbc, mybatis,ibatis : DataSourceTransactionManager
+	 hibernate : HibernateTransactionManager
+	 -->		
  	<bean id="transactionManager" 
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 		p:dataSource-ref="oracleSource"/>
 		
-				
+	 <!-- mybatis  연동 -->			
 	<bean id="sqlSessionFactoryBean" 
 	 	class="org.mybatis.spring.SqlSessionFactoryBean"
 	 	p:dataSource-ref="oracleSource"
@@ -39,4 +47,24 @@
 	
 	<!-- 모델패키지 하위에 있는 모든 객체들을 빈으로 등록 -->	 	
 	<context:component-scan base-package="com.hotel.app.model"/>
+
+ 	<!-- 
+ 		aop기반의 트랜잭션 처리 
+ 		1) 데이터베이스 연동기술(oracle, mysql, mssql,db2)의 종류에 따라서 트랜잭션 처리가 틀리므로, 
+ 		    어떠한 트랜잭션 메니저를 사용할지부터 결정
+ 	-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert" 
+				propagation="REQUIRED" 
+				rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice> 	
+ 	
+	<aop:config>
+		<aop:pointcut expression="execution(public * com.hotel.app.model..*ServiceImpl.*(..))" 
+			id="serviceMethod"/>		
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
+	</aop:config> 	
+	
 </beans>
