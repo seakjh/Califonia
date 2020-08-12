@@ -2,22 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="OracleSubCategory">
 
-	<select id="selectAll" resultType="SubCategory">
+	<resultMap type="SubCategory" id="joinMap">
+		<id column="subcategory_id" property="subcategory_id"/>
+		<association column="topcategory_id" property="topCategory" javaType="TopCategory" select="OracleTopCategory.select"/>
+		<association column="room_id" property="room" javaType="Room" select="OracleRoom.select"/>
+	</resultMap>
+	
+	<!-- 관리자모드 방관리에서 리스트로 보여주는 쿼리 -->
+	<select id="selectJoin" resultMap="joinMap">
+		select s.*, t.*, r.*
+		from subcategory s
+			left outer join topcategory t on s.topcategory_id = t.topcategory_id
+			left outer join room r on s.room_id = r.room_id
+	</select>
+	
+ 	<select id="isReserveList" resultMap="joinMap">
+		
+
+	</select>
+
+	<select id="selectAll" resultMap="joinMap">
 		select * 	from subcategory order by subcategory_id desc
 	</select>
 	
-	<select id="select" parameterType="int" resultType="SubCategory">
+	<select id="select" parameterType="int" resultMap="joinMap">
 		select * from subcategory 
 		where subcategory_id=#{subcategory_id}
 	</select>	
 	
 	<insert id="insert" parameterType="SubCategory">
-		insert into subcategory(subcategory_id, name, price, detail)
-		values(seq_subcategory.nextval, #{name}, #{price}, #{detail})
+		insert into subcategory(subcategory_id, topcategory_id, room_id)
+		values(seq_subcategory.nextval, #{topCategory.topcategory_id}, #{room.room_id})
 	</insert>
 	
 	<update id="update" parameterType="SubCategory">
-		update subcategory set name=#{name}, price=#{price}, detail=#{detail}
+		update subcategory set topcategory_id=#{topCategory.topcategory_id}, room_id=#{room.room_id}
 		where subcategory_id=#{subcategory_id}
 	</update>
 	

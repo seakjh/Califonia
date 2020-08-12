@@ -28,9 +28,14 @@
 											<li><a href="/admin/service">서비스관리</a></li>											
 										</ul>
 									</li>
-									<li><a href="/admin/reserve">예약주문정보</a></li>
+									<li><a href="#">예약주문관리</a>
+										<ul class="submenu">
+											<li><a href="/admin/reserve">예약주문정보</a></li>
+											<li><a href="/admin/payment">결제옵션관리</a></li>											
+										</ul>
+									</li>
 									<li><a href="/admin/member">회원정보</a></li>
-									<li><a href="/admin/cs">고객센터</a></li>
+									<li><a href="/admin/cs">고객문의</a></li>
 								</ul>
 							</nav>
 						</div>

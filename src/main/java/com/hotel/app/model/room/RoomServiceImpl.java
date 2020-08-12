@@ -15,6 +15,7 @@ import com.hotel.app.common.file.FileManager;
 import com.hotel.app.domain.Room;
 import com.hotel.app.domain.SubCategory;
 import com.hotel.app.model.subcategory.SubCategoryDAO;
+import com.hotel.app.model.topcategory.TopCategoryDAO;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -27,12 +28,23 @@ public class RoomServiceImpl implements RoomService {
 	@Qualifier("oracleSubCategoryDAO")
 	private SubCategoryDAO subCategoryDAO;
 	
+	@Inject
+	@Qualifier("oracleTopCategoryDAO")
+	private TopCategoryDAO topCategoryDAO;
+	
 	@Autowired(required=false)
 	private FileManager fileManager;
 	
+	
 	@Override
 	public List selectAll() {
-		return roomDAO.selectAll();
+		return subCategoryDAO.selectAll();
+	}
+
+
+	@Override
+	public List isReserveList() {
+		return subCategoryDAO.isReserveList();
 	}
 
 	@Override
@@ -48,6 +60,7 @@ public class RoomServiceImpl implements RoomService {
 		room.setFilename(filename);
 		
 		roomDAO.insert(room);
+		
 		subCategoryDAO.insert(subCategory);
 	}
 
@@ -60,5 +73,6 @@ public class RoomServiceImpl implements RoomService {
 	public void delete(int room_id) throws DMLException {
 		roomDAO.delete(room_id);
 	}
+
 
 }

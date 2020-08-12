@@ -17,6 +17,7 @@ public class OracleSubCategoryDAO implements SubCategoryDAO {
 	private SqlSessionTemplate sessionTemplate;
 	
 	public void insert(SubCategory subCategory) throws DMLException {
+		System.out.println(subCategory.getRoom().getRoom_id());
 		int result = sessionTemplate.insert("OracleSubCategory.insert", subCategory);
 		
 		if (result != 1) {
@@ -26,6 +27,10 @@ public class OracleSubCategoryDAO implements SubCategoryDAO {
 	
 	public List selectAll() {
 		return sessionTemplate.selectList("OracleSubCategory.selectAll");
+	}
+	
+	public List isReserveList() {
+		return sessionTemplate.selectList("OracleSubCategory.isReserveList");
 	}
 	
 	public void delete(int subCategory_id) throws DMLException {

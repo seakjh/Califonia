@@ -65,11 +65,11 @@ function getCategoryList(){
 		"url":"/category/list",
 		"type":"get",
 		success:function(result){
-			$("#topCategory_id").empty(); 
-			$("#topCategory_id").append("<option value='0'>카테고리 선택</option>");
+			$("#topcategory_id").empty(); 
+			$("#topcategory_id").append("<option value='0'>카테고리 선택</option>");
 			for(var i=0;i<result.length;i++){
 				var obj=result[i];
-				$("#topCategory_id").append("<option value='"+obj.topCategory_id+"'>"+obj.name+"</option>");
+				$("#topcategory_id").append("<option value='"+obj.topcategory_id+"'>"+obj.name+"</option>");
 			}
 		}
 	});	
@@ -77,6 +77,10 @@ function getCategoryList(){
 
 //파일 업로드 요청 (동기방식)
 function regist(){
+	if ($("#topcategory_id").val() == 0) {
+		alert("카테고리를 선택해주세요");
+		return;
+	}
 	$("form").attr({
 		"action":"/admin/room/regist",
 		"enctype":"multipart/form-data",
@@ -91,13 +95,13 @@ function regist(){
 
 	<div class="container">
 		<form name="form1">
-			<select id="topCategory_id" class="form-control" style="display: block;">
+			<select id="topcategory_id" class="form-control" style="display: block;" name="topCategory.topcategory_id">
 				<option value="0">카테고리 선택</option>
 			</select>
-			<input type="text" 	name="name" placeholder="방이름"> 
-			<input type="text" name="max_number" placeholder="최대 인원수"> 
-			<input type="text" name="room_size" placeholder="방 크기"> 
-			<input type="file" name="myFile">
+			<input type="text" 	name="room.name" placeholder="방이름"> 
+			<input type="text" name="room.max_number" placeholder="최대 인원수"> 
+			<input type="text" name="room.room_size" placeholder="방 크기"> 
+			<input type="file" name="room.myFile">
 		</form>
 		<br>
 		<button class="btn btn-warning">등록</button>

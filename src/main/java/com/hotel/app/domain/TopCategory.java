@@ -3,7 +3,7 @@ import lombok.Data;
 
 @Data
 public class TopCategory {
-	private int topCategory_id;
+	private int topcategory_id;
 	private String name;
 	private int price;
 	private String detail;

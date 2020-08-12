@@ -8,7 +8,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <%@include file="/include/head.jsp" %>
+        <%@include file="../include/head.jsp" %>
    </head>
 
    <body>
@@ -26,7 +26,7 @@
     </div>
     <!-- Preloader Start -->
     
-    <%@include file="/include/header.jsp" %>
+    <%@include file="../include/header.jsp" %>
     
     <main>
 
@@ -201,7 +201,7 @@
 
     </main>
 	
-	<%@include file="/include/footer.jsp" %>
+	<%@include file="../include/footer.jsp" %>
 	
     </body>
 </html>

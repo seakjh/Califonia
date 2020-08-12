@@ -13,36 +13,47 @@ $(function(){
 	
 });
 
-function reserve(){
+//방의 목록을 가져온다 
+function getList(){
 	//예약 요청 
 	$.ajax({
 		url:"/rest/room",
 		type:"get",
+		data:{
+			check_in:$("input[name='check_in']").val(),
+			check_out:$("input[name='check_in']").val()
+		},
 		success:function(result){
-			alert(result);
-			showRoom();
+			//alert(result);
+			showRoom(result);
 		}
 	});
 }
 
 //예약 가능한 방을 출력한다 
-function showRoom(){
+function showRoom(result){
+
 	class RoomTable extends React.Component{
 		render(){
 			var row = [];
-               var roomImg = ["room1.jpg", "room2.jpg", "room3.jpg", "room4.jpg", "room5.jpg", "room6.jpg"];
+
 			//데이터 쌓기
-			for(var i=0;i<6;i++){ 
+			for(var i=0;i<result.length;i++){ 
+				var subCategory = result[i];
+
+				console.log(subCategory);
+
 				row.push(
                    <div class="col-xl-4 col-lg-6 col-md-6">
                        <div class="single-room mb-50">
+							<input type="radio" name="room_id" value={subCategory.room.room_id}/>
                            <div class="room-img">
-                              <a href="rooms.html"><img src={"/resources/assets/img/rooms/"+roomImg[i]} alt=""/></a>
+                              <a href="rooms.html"><img src={"/resources/data/"+subCategory.room.filename} alt=""/></a>
                            </div>
                            <div class="room-caption">
-                               <h3><a href="rooms.html">Classic Double Bed</a></h3>
+                               <h3><a href="rooms.html">{subCategory.topCategory.name}</a></h3>
                                <div class="per-night">
-                                   <span><u>$</u>150 <span>/ par night</span></span>
+                                   <span><u>&#8361;</u>{subCategory.topCategory.price} <span>/ Max {subCategory.room.max_number}명</span></span>
                                </div>
                            </div>
                        </div>
@@ -72,6 +83,27 @@ function showRoom(){
 	}
 
        ReactDOM.render( <RoomTable/>, $(".room-area")[0]);
+}
+
+
+// 예약요청 하기  
+function reserve(){
+	var room_id = $("input[name='room_id']").val();
+
+	if(room_id == undefined) {
+		alert("예약 하실 방을 선택해 주세요");
+		return;
+	}
+
+	if(confirm("선택하신 방을 예약하시겠습니까?")){
+        form1.action="/reserve";
+		form1.method="post";
+        form1.submit();
+	}	
+
+}
+const getDetail=(room_id)=>()=> {
+	
 }
 </script>
 </head>
@@ -147,131 +179,65 @@ function showRoom(){
         <!-- slider Area End-->
 
         <!-- Booking Room Start-->
-        <div class="booking-area">
-            <div class="container">
-               <div class="row ">
-               <div class="col-12">
-                <form action="">
-                <div class="booking-wrap d-flex justify-content-between align-items-center">
-                 
-                    <!-- select in date -->
-                    <div class="single-select-box mb-30">
-                        <!-- select out date -->
-                        <div class="boking-tittle">
-                            <span> Check In Date:</span>
-                        </div>
-                        <div class="boking-datepicker">
-                            <input id="datepicker1"  placeholder="10/12/2020" />
-                        </div>
-                   </div>
-                    <!-- Single Select Box -->
-                    <div class="single-select-box mb-30">
-                        <!-- select out date -->
-                        <div class="boking-tittle">
-                            <span>Check OutDate:</span>
-                        </div>
-                        <div class="boking-datepicker">
-                            <input id="datepicker2"  placeholder="12/12/2020" />
-                        </div>
-                   </div>
-                    <!-- Single Select Box -->
-                    <div class="single-select-box mb-30">
-                        <div class="boking-tittle">
-                            <span>Adults:</span>
-                        </div>
-                        <div class="select-this">
-                            <form action="#">
-                                <div class="select-itms">
-                                    <select name="select" id="select1">
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                        <option value="">3</option>
-                                        <option value="">4</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                   </div>
-                    <!-- Single Select Box -->
-                    <div class="single-select-box mb-30">
-                        <div class="boking-tittle">
-                            <span>Children:</span>
-                        </div>
-                        <div class="select-this">
-                            <form action="#">
-                                <div class="select-itms">
-                                    <select name="select" id="select2">
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                        <option value="">3</option>
-                                        <option value="">4</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                   </div>
-                    <!-- Single Select Box -->
-                    <div class="single-select-box mb-30">
-                        <div class="boking-tittle">
-                            <span>Rooms:</span>
-                        </div>
-                        <div class="select-this">
-                            <form action="#">
-                                <div class="select-itms">
-                                    <select name="select" id="select3">
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                        <option value="">3</option>
-                                        <option value="">4</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                   </div>
-                    <!-- Single Select Box -->
-                    <div class="single-select-box pt-45 mb-30">
-                        <a href="javascript:reserve()" class="btn select-btn">Book Now</a>
-                   </div>
-               
-
-                </div>
-            </form>
-               </div>
-               </div>
-            </div>
-        </div>
-        <!-- Booking Room End-->
-
-        <!-- Make customer Start-->
-
-        <!-- Make customer End-->
-
-        <!-- Room Start -->
-        <section class="room-area">
-				
-                
-<!--                 
+		<form name="form1">
+			<div class="booking-area">
+			    <div class="container">
+			       <div class="row">
+			       <div class="col-12">
+			        <div class="booking-wrap d-flex justify-content-between align-items-center">
+			         
+			            <!-- select in date -->
+			            <div class="single-select-box mb-30">
+			                <!-- select out date -->
+			                <div class="boking-tittle">
+			                    <span> Check In Date:</span>
+			                </div>
+			                <div class="boking-datepicker">
+			                    <input id="datepicker1"  placeholder="2020/12/10" name="check_in" />
+			                </div>					
+			           </div>
+			            <!-- Single Select Box -->
+			            <div class="single-select-box mb-30">
+			                <!-- select out date -->
+			                <div class="boking-tittle">
+			                    <span>Check OutDate:</span>
+			                </div>
+			                <div class="boking-datepicker">
+			                    <input id="datepicker2"  placeholder="2020/12/12" name="check_out"  />
+			                </div>
+			           </div>
+			            <!-- Single Select Box -->
+			            <div class="single-select-box pt-45 mb-30">
+			                <a href="javascript:getList()" class="btn select-btn">Search Now</a>
+			           </div>
+			       
+			
+			        </div>
+			       </div>
+			       </div>
+			    </div>
+			</div>
+			<!-- Booking Room End-->
+			
+			<!-- Make customer Start-->
+			
+			<!-- Make customer End-->
+			
+			<!-- Room Start -->
+			<section class="room-area">
+			        
+			
+			</section>
+		</form>
+        <section>
                 <div class="row justify-content-center">
                     <div class="room-btn pt-70">
-                        <a href="#" class="btn view-btn1">View more  <i class="ti-angle-right"></i> </a>
+                        <a href="javascript:reserve()" class="btn view-btn1">Reservation<i class="ti-angle-right"></i> </a>
                     </div>
                 </div>
- -->                
-            
-
         </section>
-        <!-- Room End -->
+		        
 
-        <!-- Dining Start -->
-        
-        <!-- Dining End -->
-
-        <!-- Testimonial Start -->
-        <!-- Testimonial End -->
-
-        <!-- Blog Start -->
-       
-        <!-- Blog End -->
 
         <!-- Gallery img Start-->
         <div class="gallery-area fix">

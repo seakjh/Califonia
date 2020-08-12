@@ -35,6 +35,7 @@ button:hover {
 
 }
 </style>
+
 <script type="text/babel">
 $(function(){
 	getList();
@@ -59,17 +60,14 @@ $(function(){
 
 function regist() {
 	$.ajax({
-		url:"/category/regist",
+		url:"/service/regist",
 		type:"post",
 		data:{
 			name:$($("input[name='name']")[0]).val(),
-			price:$($("input[name='price']")[0]).val(),
-			detail:$($("textarea[name='detail']")[0]).val()
+			price:$($("input[name='price']")[0]).val()
 		},
 		success: function (result) {
-			$($("input[name='name']")[0]).val();
-			$($("input[name='price']")[0]).val();
-			$($("textarea[name='detail']")[0]).val();
+			alert(result);
 			getList();
 		}
 	});
@@ -78,7 +76,7 @@ function regist() {
 //목록 가져와서 테이블에 출력!
 function getList() {
     $.ajax({
-        url:"/category/list",
+        url:"/service/list",
         type:"get",
         success:function(result) {
             //alert(result.length);            
@@ -86,21 +84,19 @@ function getList() {
         }
     });
 }
-
 function printData(jsonArray){
 	class CategoryTable extends React.Component{
 		render(){
 			var row=[];
 			
 			for(var i=0;i<this.props.records.length;i++){
-				var category=this.props.records[i];
+				var service=this.props.records[i];
 				
 				row.push(
 					<tr>						
-						<td>{category.topcategory_id}</td>
-						<td onClick={getDetail(category.topcategory_id)}>{category.name}</td>
-						<td>{category.price}</td>
-						<td>{category.detail}</td>
+						<td>{service.service_option_id}</td>
+						<td onClick={getDetail(service.service_option_id)}>{service.name}</td>
+						<td>{service.price}</td>
 					</tr>
 				)
 			}
@@ -111,7 +107,6 @@ function printData(jsonArray){
 						<td>고유번호</td>
 						<td>이름</td>
 						<td>가격</td>
-						<td>설명</td>
 					</tr>
 					{row}					
 				</table>
@@ -120,19 +115,18 @@ function printData(jsonArray){
 	}
 	ReactDOM.render( <CategoryTable records={jsonArray}/>, $("#tableArea")[0]);
 }
-const getDetail=(topcategory_id)=>()=> {
+const getDetail=(service_option_id)=>()=> {
 	$.ajax({
-		url:"/category/detail",
+		url:"/service/detail",
 		type:"get",
 		data:{
-			topcategory_id:topcategory_id
+			service_option_id:service_option_id
 		},
 		success:function(result) {
 			//alert("결과는 	"+result.name);
-			$("input[name='topCategory_id']").val(topCategory_id);
+			$("input[name='topCategory_id']").val(service_option_id);
 			$($("input[name='name']")[1]).val(result.name);
 			$($("input[name='price']")[1]).val(result.price);
-			$($("textarea[name='detail']")[1]).val(result.detail);
 		}
 	});
 }
@@ -141,6 +135,7 @@ function del() {
 	
 }
 </script>
+
 </head>
 <body>
 
@@ -149,12 +144,11 @@ function del() {
 	<div class="row">
 		<div class="col-lg-3" id="registArea">
 			<form>
-				<input type="text" name="name" placeholder="카테고리 입력"/>
+				<input type="text" name="name" placeholder="서비스 입력"/>
 				<br>
 				<input type="text" name="price" placeholder="가격 입력"/>
 				<br>
-				<textarea rows="3" cols="25" name="detail" placeholder="설명 입력"></textarea>
-				<br>
+
 			</form>
 			<button>등록</button>
 			<button>목록</button>
@@ -163,13 +157,12 @@ function del() {
 			<div id="tableArea"></div>
 		</div>
 		<div class="col-lg-3" id="infoArea">
-			<input type="hidden" name="topCategory_id">
+			<input type="hidden" name="serviceOption_id">
 			<input type="text" name="name"/>
 			<br>
 			<input type="text" name="price"/>
 			<br>
-			<textarea rows="3" cols="25" name="detail"></textarea>
-			<br>
+
 			<button>수정</button>
 			<button>삭제</button>
 		</div>

@@ -28,7 +28,7 @@ public class FileManager {
 	}
 	
 	//지정한 경로에 파일 저장하기!!
-	public static String saveFile(MultipartFile myFile,String realPath) throws FileException{
+	public static String saveFile(MultipartFile myFile, String realPath) throws FileException{
 		boolean flag=false;
 		
 		String ori=myFile.getOriginalFilename();

@@ -8,10 +8,14 @@
 	<select id="select" resultType="Room" parameterType="int">
 		select * from room where room_id=#{room_id}
 	</select>
+
 	
 	<insert id="insert" parameterType="Room">
 		insert into room(room_id, name, max_number, room_size, filename) 
-		values(seq_room.nextval,#{name}, #{max_number}, #{room_size}, #{filename})
+		values(seq_room.nextval, #{name}, #{max_number}, #{room_size}, #{filename})
+		<selectKey keyColumn="room_id" resultType="int" keyProperty="room_id" order="AFTER">
+			select seq_room.currval as room_id from dual
+		</selectKey>
 	</insert>
 	
 	<update id="update" parameterType="Room">

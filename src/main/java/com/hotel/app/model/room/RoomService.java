@@ -9,6 +9,7 @@ import com.hotel.app.domain.SubCategory;
 
 public interface RoomService {
 	public List selectAll();
+	public List isReserveList();
 	public Room select(int room_id);
 	public void insert(SubCategory subCategory, MultipartFile myFile, String realPath);
 	public void update(Room room);

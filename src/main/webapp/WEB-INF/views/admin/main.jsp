@@ -8,6 +8,9 @@
 <body>
 <%@include file="./inc/header.jsp"%>
 
+<div style="height: 400px;">
+
+</div>
 
 <%@include file="./inc/footer.jsp"%>
 </body>

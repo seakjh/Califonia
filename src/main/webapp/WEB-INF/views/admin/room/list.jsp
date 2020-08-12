@@ -68,7 +68,7 @@ function regist() {
 //목록 가져와서 테이블에 출력!
 function getList() {
     $.ajax({
-        url:"/admin/room/list",
+        url:"/admin/room/getList",
         type:"get",
         success:function(result) {
             //alert(result.length);            
@@ -77,18 +77,20 @@ function getList() {
     });
 }
 function printData(jsonArray){
-	class CategoryTable extends React.Component{
+	class RoomTable extends React.Component{
 		render(){
 			var row=[];
 			
 			for(var i=0;i<jsonArray.length;i++){
-				var room=jsonArray[i];
+				var sub=jsonArray[i];
 				row.push(
-					<tr onClick={getDetail(room.room_id)}>						
-						<td>{room.topCategory_id}</td>
-						<td>{room.name}</td>
-						<td>{room.price}</td>
-						<td>{room.detail}</td>
+					<tr onClick={getDetail(sub.room.room_id)}>						
+						<td>{sub.room.room_id}</td>
+						<td>{sub.topCategory.name}</td>
+						<td>{sub.room.name}</td>
+						<td>{sub.room.max_number}</td>
+						<td>{sub.room.room_size}평</td>
+						<td><img src={"/resources/data/"+sub.room.filename} alt="방의 이미지" width="100px" /></td>
 					</tr>
 				)
 			}
@@ -96,29 +98,27 @@ function printData(jsonArray){
 				<table width="100%" border="1px">		
 					<tr>
 						<td>고유번호</td>
+						<td>카테고리</td>
 						<td>이름</td>
-						<td>가격</td>
-						<td>설명</td>
+						<td>최대 인원수</td>
+						<td>방 크기</td>
+						<td>이미지</td>
 					</tr>
 					{row}					
 				</table>
 			)	
 		}
 	}
-	ReactDOM.render( <CategoryTable/>, $("#tableArea")[0]);
+	ReactDOM.render( <RoomTable/>, $("#tableArea")[0]);
 }
-function getDetail(topCategory_id) {
+function getDetail(room_id) {
 	$.ajax({
 		url:"/category/detail",
 		type:"post",
 		data:{
-			topCategory_id:topCategory_id
+			room_id:room_id
 		},
 		success:function(result) {
-			$("input[name='topCategory_id']").val(result[0].topCategory_id);
-			$($("input[name='name']")[1]).val(result[0].name);
-			$($("input[name='price']")[1]).val(result[0].price);
-			$($("textarea[name='detail']")[1]).val(result[0].detail);
 		}
 	});
 }
