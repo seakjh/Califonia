@@ -33,8 +33,8 @@ public class OracleSubCategoryDAO implements SubCategoryDAO {
 		return sessionTemplate.selectList("OracleSubCategory.isReserveList");
 	}
 	
-	public void delete(int subCategory_id) throws DMLException {
-		int result = sessionTemplate.delete("OracleSubCategory.delete", subCategory_id);
+	public void delete(int subcategory_id) throws DMLException {
+		int result = sessionTemplate.delete("OracleSubCategory.delete", subcategory_id);
 		
 		if (result == 0) {
 			throw new DMLException("카테고리 삭제 실패!");
@@ -50,7 +50,7 @@ public class OracleSubCategoryDAO implements SubCategoryDAO {
 	}
 
 	@Override
-	public SubCategory select(int subCategory_id) {
-		return sessionTemplate.selectOne("OracleSubCategory.select", subCategory_id);
+	public SubCategory select(int subcategory_id) {
+		return sessionTemplate.selectOne("OracleSubCategory.select", subcategory_id);
 	}
 }

@@ -16,12 +16,14 @@
 	</typeAliases>
 	<mappers>
 		<!-- oracle 용 Mapper  -->
+		<mapper resource="mybatis/oracle/MemberMapper.xml"/>
 		<mapper resource="mybatis/oracle/TopCategoryMapper.xml"/>
 		<mapper resource="mybatis/oracle/SubCategoryMapper.xml"/>
 		<mapper resource="mybatis/oracle/ServiceOptionMapper.xml"/>
 		<mapper resource="mybatis/oracle/BedOptionMapper.xml"/>
 		<mapper resource="mybatis/oracle/RoomMapper.xml"/>
 		<mapper resource="mybatis/oracle/PaymentMapper.xml"/>
+		<mapper resource="mybatis/oracle/ReservationMapper.xml"/>
 		<mapper resource="mybatis/oracle/BoardMapper.xml"/>
 		
 		<!-- mysql 용 Mapper  -->

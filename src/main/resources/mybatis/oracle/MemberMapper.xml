@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OracleMember">
+
+	<select id="selectAll" resultType="Member">
+		select * 	from member order by member_id desc
+	</select>
+	
+	<select id="select" parameterType="int" resultType="Member">
+		select * from member 
+		where member_id=#{member_id}
+	</select>	
+	
+	<insert id="insert" parameterType="Member">
+		insert into member(member_id, id, password, name, phone, email
+		values(seq_member.nextval, #{id}, #{password}, #{name}, #{phone}, #{email})
+	</insert>
+	
+	<update id="update" parameterType="Member">
+		update member set password=#{password}, name=#{name}, phone=#{phone}, email=#{email}
+		where member_id=#{member_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from member
+		where member_id=#{member_id}
+	</delete>		
+	
+</mapper>
+
+
+
+
+
+

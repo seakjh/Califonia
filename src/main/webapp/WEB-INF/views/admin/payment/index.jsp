@@ -60,11 +60,10 @@ $(function(){
 
 function regist() {
 	$.ajax({
-		url:"/service/regist",
+		url:"/payment/regist",
 		type:"post",
 		data:{
-			name:$($("input[name='name']")[0]).val(),
-			price:$($("input[name='price']")[0]).val()
+			pay_method:$($("input[name='pay_method']")[0]).val()
 		},
 		success: function (result) {
 			alert(result);
@@ -76,7 +75,7 @@ function regist() {
 //목록 가져와서 테이블에 출력!
 function getList() {
     $.ajax({
-        url:"/service/list",
+        url:"/payment/list",
         type:"get",
         success:function(result) {
             //alert(result.length);            
@@ -90,13 +89,12 @@ function printData(jsonArray){
 			var row=[];
 			
 			for(var i=0;i<this.props.records.length;i++){
-				var service=this.props.records[i];
+				var payment=this.props.records[i];
 				
 				row.push(
 					<tr>						
-						<td>{service.service_option_id}</td>
-						<td onClick={getDetail(service.service_option_id)}>{service.name}</td>
-						<td>{service.price}</td>
+						<td>{payment.payment_id}</td>
+						<td onClick={getDetail(payment.payment_id)}>{payment.pay_method}</td>
 					</tr>
 				)
 			}
@@ -105,8 +103,7 @@ function printData(jsonArray){
 				<table width="100%" border="1px">		
 					<tr>
 						<td>고유번호</td>
-						<td>이름</td>
-						<td>가격</td>
+						<td>결제방법</td>
 					</tr>
 					{row}					
 				</table>
@@ -115,18 +112,16 @@ function printData(jsonArray){
 	}
 	ReactDOM.render( <CategoryTable records={jsonArray}/>, $("#tableArea")[0]);
 }
-const getDetail=(service_option_id)=>()=> {
+const getDetail=(payment_id)=>()=> {
 	$.ajax({
-		url:"/service/detail",
+		url:"/payment/detail",
 		type:"get",
 		data:{
-			service_option_id:service_option_id
+			payment_id:payment_id
 		},
 		success:function(result) {
-			//alert("결과는 	"+result.name);
-			$("input[name='topCategory_id']").val(service_option_id);
-			$($("input[name='name']")[1]).val(result.name);
-			$($("input[name='price']")[1]).val(result.price);
+			$("input[name='payment_id']").val(payment_id);
+			$($("input[name='pay_method']")[1]).val(result.pay_method);
 		}
 	});
 }
@@ -144,11 +139,8 @@ function del() {
 	<div class="row">
 		<div class="col-lg-3" id="registArea">
 			<form>
-				<input type="text" name="name" placeholder="서비스 입력"/>
+				<input type="text" name="pay_method" placeholder="결제 방법 입력"/>
 				<br>
-				<input type="text" name="price" placeholder="가격 입력"/>
-				<br>
-
 			</form>
 			<button>등록</button>
 			<button>목록</button>
@@ -157,12 +149,9 @@ function del() {
 			<div id="tableArea"></div>
 		</div>
 		<div class="col-lg-3" id="infoArea">
-			<input type="hidden" name="serviceOption_id">
-			<input type="text" name="name"/>
+			<input type="hidden" name="payment_id">
+			<input type="text" name="pay_method"/>
 			<br>
-			<input type="text" name="price"/>
-			<br>
-
 			<button>수정</button>
 			<button>삭제</button>
 		</div>

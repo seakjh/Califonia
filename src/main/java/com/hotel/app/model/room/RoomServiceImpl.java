@@ -35,12 +35,10 @@ public class RoomServiceImpl implements RoomService {
 	@Autowired(required=false)
 	private FileManager fileManager;
 	
-	
 	@Override
 	public List selectAll() {
 		return subCategoryDAO.selectAll();
 	}
-
 
 	@Override
 	public List isReserveList() {
@@ -50,6 +48,11 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public Room select(int room_id) {
 		return roomDAO.select(room_id);
+	}
+
+	@Override
+	public SubCategory selectJoin(int subcategory_id) {
+		return subCategoryDAO.select(subcategory_id);
 	}
 
 	@Override
@@ -73,6 +76,5 @@ public class RoomServiceImpl implements RoomService {
 	public void delete(int room_id) throws DMLException {
 		roomDAO.delete(room_id);
 	}
-
 
 }

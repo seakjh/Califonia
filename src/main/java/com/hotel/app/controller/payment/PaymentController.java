@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotel.app.aop.exception.DMLException;
-import com.hotel.app.domain.ServiceOption;
-import com.hotel.app.model.service.ServiceOptionService;
+import com.hotel.app.domain.Payment;
+import com.hotel.app.model.payment.PaymentService;
 
 @Controller
 public class PaymentController {
 	private static Logger logger = LoggerFactory.getLogger(PaymentController.class);
 	
 	@Inject
-	private ServiceOptionService serviceOptionService;
+	private PaymentService paymentService;
 	
 	@RequestMapping(value = "/admin/payment", method = RequestMethod.GET)
 	public String goPayment() {
@@ -33,24 +33,23 @@ public class PaymentController {
 	
 	@RequestMapping(value="/payment/regist", method=RequestMethod.POST)
 	@ResponseBody
-	public String regist(ServiceOption serviceOption) {
-		System.out.println("이름 : "+serviceOption.getName());
-		serviceOptionService.insert(serviceOption);
+	public String regist(Payment payment) {
+		paymentService.insert(payment);
 		return "1";
 	}
 	
 	@RequestMapping(value="/payment/list",method=RequestMethod.GET, produces="application/json;charset=utf8")
 	@ResponseBody
-	public List<ServiceOption> selectAll() {
-		List<ServiceOption> categoryList = serviceOptionService.selectAll();
+	public List<Payment> selectAll() {
+		List<Payment> payList = paymentService.selectAll();
 
-		return categoryList;
+		return payList;
 	}
 	
 	@RequestMapping(value = "/payment/detail", method = RequestMethod.GET)
 	@ResponseBody
-	public ServiceOption select(@RequestParam("service_option_id") int service_option_id) {
-		return serviceOptionService.select(service_option_id);
+	public Payment select(@RequestParam("payment_id") int payment_id) {
+		return paymentService.select(payment_id);
 	}
 	
 	@ExceptionHandler(DMLException.class)

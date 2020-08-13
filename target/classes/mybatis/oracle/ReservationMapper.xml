@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OracleReservation">
+
+	<resultMap type="Reservation" id="joinMap">
+		<id column="reservation_id" property="reservation_id"/>
+		<result column="total_pay" property="total_pay"/>
+		<result column="reserve_date" property="reserve_date"/>
+		<result column="check_in" property="check_in"/>
+		<result column="check_out" property="check_out"/>
+		<association column="member_id" property="member" javaType="Member" select="OracleMember.select"/>
+		<association column="room_id" property="room" javaType="Room" select="OracleRoom.select"/>
+		<association column="bed_option_id" property="bedOption" javaType="BedOption" select="OracleBedOption.select"/>
+		<association column="service_option_id" property="serviceOption" javaType="ServiceOption" select="OracleServiceOption.select"/>
+		<association column="payment_id" property="payment" javaType="Payment" select="OraclePayment.select"/>
+	</resultMap>
+
+	<select id="selectAll" resultMap="joinMap">
+		select * 	from reservation order by reservation_id desc
+	</select>
+	
+	<select id="select" parameterType="int" resultMap="joinMap">
+		select * from reservation 
+		where reservation_id=#{reservation_id}
+	</select>	
+	
+	<insert id="insert" parameterType="Reservation">
+		insert into reservation(reservation_id, member_id, room_id, bed_option_id, service_option_id, payment_id, total_pay, check_in, check_out)
+		values(seq_reservation.nextval, #{member.member_id}, #{room.room_id}, #{bedOption.bed_option_id}, #{serviceOption.service_option_id}, #{payment.payment_id}, #{total_pay}, #{check_in}, #{check_out})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from reservation
+		where reservation_id=#{reservation_id}
+	</delete>		
+	
+</mapper>
+
+
+
+
+
+

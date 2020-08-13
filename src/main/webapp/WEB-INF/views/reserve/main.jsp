@@ -1,4 +1,21 @@
+<%@page import="com.hotel.app.domain.Reservation"%>
+<%@page import="com.hotel.app.domain.TopCategory"%>
+<%@page import="com.hotel.app.domain.Room"%>
+<%@page import="com.hotel.app.domain.SubCategory"%>
+<%@page import="com.hotel.app.domain.Payment"%>
+<%@page import="com.hotel.app.domain.ServiceOption"%>
+<%@page import="com.hotel.app.domain.BedOption"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	Reservation reservation = (Reservation)request.getAttribute("reservation");
+	SubCategory subCategory = (SubCategory)request.getAttribute("subCategory");
+	Room room = subCategory.getRoom();
+	TopCategory topCategory = subCategory.getTopCategory();
+	List<BedOption> bedList = (List)request.getAttribute("bedList");
+	List<ServiceOption> serviceList = (List)request.getAttribute("serviceList");
+	List<Payment> payList = (List)request.getAttribute("payList");
+%>
 <!doctype html>
 <html class="no-js" lang="ko">
 <head>
@@ -22,13 +39,41 @@ table, th, td {
 	border: 1px solid #333;
 	border-collapse: collapse;
 }
+.pay p{
+	font-size: 20pt;
+	font-family: sans-serif;
+	font-weight: bold;
+	color: #333;
+}
 </style>
 <script type="text/javascript">
+$(function () {
+	
+	$($("button")[0]).click(function(){
+		payment();
+	});
+	
+});
+
 function payment() {
+/* 	var bed_option_id = $("input[name='bed_option_id']");
+	var isCheck = undefined;
+	for (var i=0; i<bed_option_id.length; i++) {
+		if (bed_option_id[i].checked == true) {
+			isCheck = bed_option_id[i].value;
+		}
+	}
+
+	if (bed_option_id == undefined || isCheck == undefined) {
+		alert("침대 옵션을 선택해 주세요");
+		return;
+	} */
+	
 	if ($("#payment_id").val() == 0) {
 		alert("결제 옵션을 선택해주세요");
 		return;
 	}
+		
 	$("form").attr({
 		"action":"/reserve/payment",
 		"enctype":"multipart/form-data",
@@ -36,6 +81,28 @@ function payment() {
 	});
 	$("form").submit();	
 }
+
+/* function priceCalculation() {
+	var serviceArray = $("input[name='service_option_id']");
+	var priceArray = $("input[name='price']");
+	var price = 0;
+	for (var i=0; i<serviceArray.length; i++) {
+		if(serviceArray[i].checked == true) {
+			price = priceArray[i].val();
+			break;
+		}
+		else {
+			price = 0;
+			break;
+		}
+	}
+	alert("서비스 값 : "+price);
+	
+	var total_pay = $("input[name='total_pay']");
+	alert("방 값 : "+total_pay.val());
+	total_pay.val(total_pay.val() + price);
+} */
+
 </script>
     
 </head>
@@ -59,33 +126,37 @@ function payment() {
     <main>
 		<div class="container paint">
 			<form>
-				<input type="hidden" name="member_id" value="1"> 
-				<input type="hidden" name="room_id" value="<%%>"> 
+				<input type="hidden" name="member.member_id" value="1"> 
+				<input type="hidden" name="room.room_id" value="<%=room.getRoom_id()%>"> 
 				<div class="row">
 					<div class="col-lg-6">
-						<div class="radio">
-							<h3>침대 옵션 선택</h3>
-							<label>
-								<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-								더블 베드(킹 사이즈)
-							</label>
+						<h3>예약 기간</h3>
+						<div style="margin-bottom: 10px;">
+							<span>체크 인 :</span><input type="text" style="width: 150px;" name="check_in" value="<%=reservation.getCheck_in() %>" readonly>
+							<span>체크 아웃 :</span><input type="text" style="width: 150px;" name="check_out" value="<%=reservation.getCheck_out() %>" readonly>
 						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-								트윈 베드
-							</label>
-						</div>
+						<h3>침대 옵션 선택</h3>
+							<%for (int i=0; i<bedList.size(); i++) {%>
+							<%BedOption bedOption = bedList.get(i); %>
+							<div class="radio">
+								<label>
+									<input type="radio" name="bedOption.bed_option_id" value="<%=bedOption.getBed_option_id() %>">
+									<%=bedOption.getName() %>
+								</label>
+							</div>
+							<%} %>
 						
-						<div class="checkbox">
-							<h3>서비스 옵션 선택</h3>
-							<label>
-							  <input type="checkbox" value=""> 조식
-							</label>
-							<label>
-							  <input type="checkbox" value=""> 와인
-							</label>
-						</div>
+						<h3>서비스 옵션 선택</h3>
+							<%for (int i=0; i<serviceList.size(); i++) {%>
+							<%ServiceOption serviceOption = serviceList.get(i); %>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="serviceOption.service_option_id" value="<%=serviceOption.getService_option_id()%>">
+									<%=serviceOption.getName() %> &nbsp;
+									<input type="text" style="width: 70px" name="serviceOption.price" value="<%=serviceOption.getPrice() %>" readonly>원
+								</label>
+							</div>
+							<%} %>
 						<table summary="In Room,In Hotel,Room Service로 구성된 테이블 입니다.">
 							<colgroup>
 								<col width="20%" class="col1">
@@ -177,13 +248,19 @@ function payment() {
 							</div>
 						</div>
 						<h3>결제 옵션 선택</h3>
-						<select class="form-control" id="payment_id">
-							<option>신용카드</option>
-							<option>카카오페이</option>
-							<option>체크카드</option>
-						</select>		
-						<div style="margin-top: 50px; text-align: right;">
-							<button class="btn btn-default" onclick="payment()">결제</button>
+						<select class="form-control" name="payment.payment_id" id="payment_id">
+							<option value="0">결제 방법 선택</option>
+							<%for (int i=0; i<payList.size(); i++) {%>
+							<%Payment payment = payList.get(i); %>
+							<option value="<%=payment.getPayment_id()%>"><%=payment.getPay_method() %></option>
+							<%} %>
+						</select>
+						<div class="pay">
+							<%int price = topCategory.getPrice(); %>
+							<p>총 결제 금액 : <input type="text" name="total_pay" style="width: 120px" value="<%=price %>" readonly> 원</p>
+						</div>	
+						<div style="margin-top: 20px; text-align: right;">
+							<button class="btn btn-default">결제</button>
 						</div>			 
 					</div>
 				</div>

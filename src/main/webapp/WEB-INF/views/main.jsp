@@ -15,6 +15,14 @@ $(function(){
 
 //방의 목록을 가져온다 
 function getList(){
+	var check_in = $("input[name='check_in']");
+	var check_out = $("input[name='check_out']");
+
+	if(check_in.val().length == 0 || check_out.val().length == 0) {
+		alert("예약 하실 날짜를 선택해 주세요");
+		return;
+	}
+
 	//예약 요청 
 	$.ajax({
 		url:"/rest/room",
@@ -44,14 +52,14 @@ function showRoom(result){
 				console.log(subCategory);
 
 				row.push(
-                   <div class="col-xl-4 col-lg-6 col-md-6">
+                   <div class="col-xl-3 col-lg-6 col-md-6">
                        <div class="single-room mb-50">
-							<input type="radio" name="room_id" value={subCategory.room.room_id}/>
+							<input type="radio" id="room_id" name="subcategory_id" value={subCategory.subcategory_id}/>
                            <div class="room-img">
-                              <a href="rooms.html"><img src={"/resources/data/"+subCategory.room.filename} alt=""/></a>
+                              <img src={"/resources/data/"+subCategory.room.filename} alt=""/>
                            </div>
                            <div class="room-caption">
-                               <h3><a href="rooms.html">{subCategory.topCategory.name}</a></h3>
+                               <h3>{subCategory.topCategory.name}</h3>
                                <div class="per-night">
                                    <span><u>&#8361;</u>{subCategory.topCategory.price} <span>/ Max {subCategory.room.max_number}명</span></span>
                                </div>
@@ -88,9 +96,15 @@ function showRoom(result){
 
 // 예약요청 하기  
 function reserve(){
-	var room_id = $("input[name='room_id']").val();
+	var room_id = $("input[name='subcategory_id']");
+	var isCheck = null;
+	for (var i=0; i<room_id.length; i++) {
+		if (room_id[i].checked == true) {
+			isCheck = room_id[i].value;
+		}
+	}
 
-	if(room_id == undefined) {
+	if(room_id == undefined || isCheck == null) {
 		alert("예약 하실 방을 선택해 주세요");
 		return;
 	}
