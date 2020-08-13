@@ -10,6 +10,7 @@
 		<typeAlias type="com.hotel.app.domain.ServiceOption" alias="ServiceOption"/>
 		<typeAlias type="com.hotel.app.domain.Room" alias="Room"/>
 		<typeAlias type="com.hotel.app.domain.Reservation" alias="Reservation"/>
+		<typeAlias type="com.hotel.app.domain.Admin" alias="Admin"/>
 		<typeAlias type="com.hotel.app.domain.Member" alias="Member"/>
 		<typeAlias type="com.hotel.app.domain.Board" alias="Board"/>
 		<typeAlias type="com.hotel.app.domain.BedOption" alias="BedOption"/>
@@ -17,6 +18,7 @@
 	</typeAliases>
 	<mappers>
 		<!-- oracle 용 Mapper  -->
+		<mapper resource="mybatis/oracle/AdminMapper.xml"/>
 		<mapper resource="mybatis/oracle/MemberMapper.xml"/>
 		<mapper resource="mybatis/oracle/TopCategoryMapper.xml"/>
 		<mapper resource="mybatis/oracle/SubCategoryMapper.xml"/>

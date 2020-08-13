@@ -8,18 +8,19 @@
 		<association column="room_id" property="room" javaType="Room" select="OracleRoom.select"/>
 	</resultMap>
 	
-	<!-- 관리자모드 방관리에서 리스트로 보여주는 쿼리 -->
-	<select id="selectJoin" resultMap="joinMap">
+<!-- 	<select id="selectJoin" resultMap="joinMap">
 		select s.*, t.*, r.*
 		from subcategory s
 			left outer join topcategory t on s.topcategory_id = t.topcategory_id
 			left outer join room r on s.room_id = r.room_id
-	</select>
+	</select> -->
 	
- 	<select id="isReserveList" resultMap="joinMap">
+	<!-- 관리자모드 방관리에서 리스트로 보여주는 쿼리 -->
+ 	<select id="AdminSelectAll" resultMap="joinMap">
+ 		select * from subcategory order by subcategory_id desc
 	</select>
 
-	<select id="selectAll" parameterType="java.util.Map" resultType="SubCategory">
+	<select id="selectAll" parameterType="java.util.Map" resultMap="joinMap">
 		<![CDATA[ 
 			select * from subcategory where room_id not in (				
 			  select room_id from reservation 				

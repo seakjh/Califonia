@@ -49,10 +49,10 @@ public class TopCategoryController {
 	
 	@RequestMapping(value = "/category/detail", method = RequestMethod.GET)
 	@ResponseBody
-	public TopCategory select(@RequestParam("topCategory_id") int topCategory_id) {
-		logger.info("id : "+topCategory_id);
-		System.out.println(topCategoryService.select(topCategory_id));
-		return topCategoryService.select(topCategory_id);
+	public TopCategory select(@RequestParam("topcategory_id") int topcategory_id) {
+		logger.info("id : "+topcategory_id);
+		System.out.println(topCategoryService.select(topcategory_id));
+		return topCategoryService.select(topcategory_id);
 	}
 
 	@RequestMapping(value = "/category/edit", method = RequestMethod.GET)
@@ -64,9 +64,9 @@ public class TopCategoryController {
 	
 	@RequestMapping(value="/category/del",method=RequestMethod.GET)
 	@ResponseBody
-	public String delete(@RequestParam("topCategory_id") int topCategory_id) {
-		System.out.println(topCategory_id);
-		topCategoryService.delete(topCategory_id);
+	public String delete(@RequestParam("topcategory_id") int topcategory_id) {
+		System.out.println(topcategory_id);
+		topCategoryService.delete(topcategory_id);
 		return "1";
 	}
 	

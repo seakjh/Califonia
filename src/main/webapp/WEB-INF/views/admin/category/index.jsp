@@ -129,7 +129,7 @@ const getDetail=(topcategory_id)=>()=> {
 		},
 		success:function(result) {
 			//alert("결과는 	"+result.name);
-			$("input[name='topCategory_id']").val(topCategory_id);
+			$("input[name='topcategory_id']").val(topcategory_id);
 			$($("input[name='name']")[1]).val(result.name);
 			$($("input[name='price']")[1]).val(result.price);
 			$($("textarea[name='detail']")[1]).val(result.detail);
@@ -163,7 +163,7 @@ function del() {
 			<div id="tableArea"></div>
 		</div>
 		<div class="col-lg-3" id="infoArea">
-			<input type="hidden" name="topCategory_id">
+			<input type="hidden" name="topcategory_id">
 			<input type="text" name="name"/>
 			<br>
 			<input type="text" name="price"/>

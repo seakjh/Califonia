@@ -27,11 +27,11 @@ public class OracleSubCategoryDAO implements SubCategoryDAO {
 		}
 	}
 	
-	// 메인에 출력될 룸목록 
+ 
 	public List selectAll() {
-		return sessionTemplate.selectList("OracleSubCategory.selectAll");
+		return sessionTemplate.selectList("OracleSubCategory.AdminSelectAll");
 	}
-	
+	// 메인에 출력될 룸목록	
 	public List selectAll(Map prop) {
 		return sessionTemplate.selectList("OracleSubCategory.selectAll", prop);
 	}
