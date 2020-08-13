@@ -8,6 +8,8 @@
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@include file="./include/head.jsp" %>
+<script src="/resources/assets/js/common/lib.js"></script>
+
 <script type="text/babel">
 $(function(){
 	
@@ -108,13 +110,22 @@ function reserve(){
 		alert("예약 하실 방을 선택해 주세요");
 		return;
 	}
+	//날짜 관여하기 
 
+	var checkin=getDateStringWithDate(form1.check_in.value);
+	var checkout=getDateStringWithDate(form1.check_out.value);
+ 
+	form1.check_in.value=checkin;
+	form1.check_out.value=checkout;
+
+	//alert(" 조작된 체크인은 "+form1.check_in.value+", 체크아웃은 "+form1.check_out.value);
+	
 	if(confirm("선택하신 방을 예약하시겠습니까?")){
         form1.action="/reserve";
 		form1.method="post";
         form1.submit();
 	}	
-
+	
 }
 const getDetail=(room_id)=>()=> {
 	

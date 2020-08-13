@@ -75,6 +75,8 @@ public class ReserveController {
 	@RequestMapping(value = "/reserve/payment", method = RequestMethod.POST)
 	public String payment(Model model, Reservation reservation) {
 		logger.info("결제 호출");
+		logger.info("Check_in is "+ reservation.getCheck_in());
+		logger.info("Check_out is "+ reservation.getCheck_out());
 		
 		reservationService.insert(reservation);
 		

@@ -46,6 +46,7 @@ table, th, td {
 	color: #333;
 }
 </style>
+<script src="/resources/assets/js/common/lib.js"></script>
 <script type="text/javascript">
 $(function () {
 	
@@ -53,21 +54,28 @@ $(function () {
 		payment();
 	});
 	
+	alert("당신이 호텔에 머무는 기간은 "+getDiffDate(<%=reservation.getCheck_in() %>, <%=reservation.getCheck_out() %>));
 });
 
+//결제 요청 
 function payment() {
-/* 	var bed_option_id = $("input[name='bed_option_id']");
-	var isCheck = undefined;
+ 	var bed_option_id = $("input[name='bedOption.bed_option_id']");
+ 	
+	var checkCount=0;
+	
+	alert(bed_option_id.length);
+	
 	for (var i=0; i<bed_option_id.length; i++) {
 		if (bed_option_id[i].checked == true) {
-			isCheck = bed_option_id[i].value;
+			checkCount++;
 		}
 	}
-
-	if (bed_option_id == undefined || isCheck == undefined) {
+	
+	
+	if (checkCount<1) {
 		alert("침대 옵션을 선택해 주세요");
 		return;
-	} */
+	}
 	
 	if ($("#payment_id").val() == 0) {
 		alert("결제 옵션을 선택해주세요");
@@ -82,7 +90,7 @@ function payment() {
 	$("form").submit();	
 }
 
-/* function priceCalculation() {
+function priceCalculation() {
 	var serviceArray = $("input[name='service_option_id']");
 	var priceArray = $("input[name='price']");
 	var price = 0;
@@ -101,7 +109,7 @@ function payment() {
 	var total_pay = $("input[name='total_pay']");
 	alert("방 값 : "+total_pay.val());
 	total_pay.val(total_pay.val() + price);
-} */
+}
 
 </script>
     
@@ -130,7 +138,7 @@ function payment() {
 				<input type="hidden" name="room.room_id" value="<%=room.getRoom_id()%>"> 
 				<div class="row">
 					<div class="col-lg-6">
-						<h3>예약 기간</h3>
+						<h3>[<%=topCategory.getName() %>]예약 기간</h3>
 						<div style="margin-bottom: 10px;">
 							<span>체크 인 :</span><input type="text" style="width: 150px;" name="check_in" value="<%=reservation.getCheck_in() %>" readonly>
 							<span>체크 아웃 :</span><input type="text" style="width: 150px;" name="check_out" value="<%=reservation.getCheck_out() %>" readonly>
@@ -260,7 +268,7 @@ function payment() {
 							<p>총 결제 금액 : <input type="text" name="total_pay" style="width: 120px" value="<%=price %>" readonly> 원</p>
 						</div>	
 						<div style="margin-top: 20px; text-align: right;">
-							<button class="btn btn-default">결제</button>
+							<button type="button" class="btn btn-default">결제</button>
 						</div>			 
 					</div>
 				</div>
