@@ -58,6 +58,7 @@ public class ReserveController {
 		logger.info("Check_out is "+ reservation.getCheck_out());
 		
 		SubCategory subCategory = roomService.selectJoin(subcategory_id);
+		
 		List<BedOption> bedList = bedOptionService.selectAll();
 		List<ServiceOption> serviceList = serviceOptionService.selectAll();
 		List<Payment> payList = paymentService.selectAll();

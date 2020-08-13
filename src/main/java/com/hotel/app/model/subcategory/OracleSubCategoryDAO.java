@@ -1,6 +1,7 @@
 package com.hotel.app.model.subcategory;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -8,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.hotel.app.aop.exception.DMLException;
+import com.hotel.app.domain.Reservation;
 import com.hotel.app.domain.SubCategory;
 
 @Repository
@@ -25,8 +27,16 @@ public class OracleSubCategoryDAO implements SubCategoryDAO {
 		}
 	}
 	
+	// 메인에 출력될 룸목록 
 	public List selectAll() {
 		return sessionTemplate.selectList("OracleSubCategory.selectAll");
+	}
+	
+	public List selectAll(Map prop) {
+		return sessionTemplate.selectList("OracleSubCategory.selectAll", prop);
+	}
+	public List selectAll(Reservation reservation) {
+		return sessionTemplate.selectList("OracleSubCategory.selectAll", reservation);
 	}
 	
 	public List isReserveList() {
@@ -48,7 +58,8 @@ public class OracleSubCategoryDAO implements SubCategoryDAO {
 			throw new DMLException("카테고리 수정 실패!");
 		}
 	}
-
+	
+	
 	@Override
 	public SubCategory select(int subcategory_id) {
 		return sessionTemplate.selectOne("OracleSubCategory.select", subcategory_id);

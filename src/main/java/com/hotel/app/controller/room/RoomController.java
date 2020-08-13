@@ -1,6 +1,9 @@
 package com.hotel.app.controller.room;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotel.app.common.pager.Pager;
+import com.hotel.app.domain.Reservation;
 import com.hotel.app.domain.Room;
 import com.hotel.app.domain.SubCategory;
 import com.hotel.app.model.room.RoomService;
@@ -70,16 +74,27 @@ public class RoomController {
 	//호텔의 모든 방 목록 가져오기 ( 예약 가능한지 여부는 현재 안따짐) 
 	@RequestMapping(value="/rest/room", method=RequestMethod.GET)
 	@ResponseBody
-	public List<SubCategory> getList(HttpServletRequest request) {
+	public List<SubCategory> getList(HttpServletRequest request, Reservation reservation) {
 		logger.info("방들을 호출함");
 
-		String check_in = request.getParameter("check_in");
-		String check_out = request.getParameter("check_out");
+		String check_in = reservation.getCheck_in();
+		String check_out = reservation.getCheck_out();
+		
 		logger.info("들어옴? "+check_in+","+check_out);
 		
 		//roomService.isReserveList(); 예약가능한 방 
-		List categoryList = roomService.selectAll();
+		Map<String,Date> prop = new HashMap<String, Date>();
+		Date in_date =new Date(2020,8,1);
+		Date out_date =new Date(2020,8,7);
+		
+		prop.put("check_in", in_date);
+		prop.put("check_out", out_date);
+		
+		List categoryList = roomService.selectAll(reservation);
+		
+		
 		logger.info("caegoryList is "+categoryList);
+		logger.info("caegoryList size "+categoryList.size());
 		
 		return categoryList;
 	}

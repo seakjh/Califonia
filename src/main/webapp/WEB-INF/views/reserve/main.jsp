@@ -48,13 +48,19 @@ table, th, td {
 </style>
 <script src="/resources/assets/js/common/lib.js"></script>
 <script type="text/javascript">
+var servicePrice=0;
+var useDate = getDiffDate(<%=reservation.getCheck_in() %>, <%=reservation.getCheck_out() %>);//체류기간
+var roomPrice = <%=topCategory.getPrice()%>; //방의 단가
+
 $(function () {
 	
 	$($("button")[0]).click(function(){
 		payment();
 	});
 	
-	alert("당신이 호텔에 머무는 기간은 "+getDiffDate(<%=reservation.getCheck_in() %>, <%=reservation.getCheck_out() %>));
+	//최초의 계산 
+	$("input[name='total_pay']").val(priceCalculation(roomPrice*useDate , 0));
+	
 });
 
 //결제 요청 
@@ -63,14 +69,13 @@ function payment() {
  	
 	var checkCount=0;
 	
-	alert(bed_option_id.length);
+	//alert(bed_option_id.length);
 	
 	for (var i=0; i<bed_option_id.length; i++) {
 		if (bed_option_id[i].checked == true) {
 			checkCount++;
 		}
 	}
-	
 	
 	if (checkCount<1) {
 		alert("침대 옵션을 선택해 주세요");
@@ -90,25 +95,59 @@ function payment() {
 	$("form").submit();	
 }
 
-function priceCalculation() {
-	var serviceArray = $("input[name='service_option_id']");
-	var priceArray = $("input[name='price']");
-	var price = 0;
-	for (var i=0; i<serviceArray.length; i++) {
-		if(serviceArray[i].checked == true) {
-			price = priceArray[i].val();
-			break;
+/*------------------------------------------------------
+ 계산 공식 
+ 지불할 금액 = 총 구매금액(a) +  서비스 옵션가격(b)
+ ------------------------------------------------------*/
+function priceCalculation(totalBuy, servicePrice) {
+	return totalBuy +  servicePrice;
+}
+
+function serviceCalculation(obj) {
+	$("input[name='serviceOption.service_option_id']"); //체크박스 배열
+
+
+	if(obj.value==2){ //2이면 와인 50000
+		if(obj.checked){
+			servicePrice=servicePrice+parseInt($($("input[name='serviceOption.price']")[0]).val());	
+		}else{
+			servicePrice=servicePrice-parseInt($($("input[name='serviceOption.price']")[0]).val());
+		}
+		
+	}else if(obj.value==1){//1이면 조식 10000
+		if(obj.checked){
+			servicePrice=servicePrice+parseInt($($("input[name='serviceOption.price']")[1]).val());	
+		}else{
+			servicePrice=servicePrice-parseInt($($("input[name='serviceOption.price']")[1]).val());
+		} 
+	}
+	
+	//alert("당신이 선택한 옵션 가격은 "+servicePrice);
+	
+	var totalPay=priceCalculation(roomPrice*useDate, servicePrice); //총 지불할 금액 
+	$("input[name='total_pay']").val(totalPay);
+	
+	/*
+	var serviceArray = $("input[name='serviceOption.service_option_id']");
+	var priceArray = $("input[name='serviceOption.price']");
+	var total_pay = $("input[name='total_pay']");
+	var count = 0;
+	
+ 	for (var i=0; i<serviceArray.length; i++) {
+		if(serviceArray[i].checked == true) {			
+			//alert(total_pay.val());
+			//alert(priceArray[i].value);
+			//alert(total_pay.val()+priceArray[i].value);
+			total_pay.val() = total_pay.val()+priceArray[i].val();
+			count++;
 		}
 		else {
-			price = 0;
-			break;
+			if (count > 0) {
+				//total_pay.val() = total_pay.val()-priceArray[i].val();				
+			}
 		}
 	}
-	alert("서비스 값 : "+price);
-	
-	var total_pay = $("input[name='total_pay']");
-	alert("방 값 : "+total_pay.val());
-	total_pay.val(total_pay.val() + price);
+ 	*/
 }
 
 </script>
@@ -159,7 +198,7 @@ function priceCalculation() {
 							<%ServiceOption serviceOption = serviceList.get(i); %>
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="serviceOption.service_option_id" value="<%=serviceOption.getService_option_id()%>">
+									<input type="checkbox"  name="serviceOption.service_option_id" value="<%=serviceOption.getService_option_id()%>" onclick="serviceCalculation(this)">
 									<%=serviceOption.getName() %> &nbsp;
 									<input type="text" style="width: 70px" name="serviceOption.price" value="<%=serviceOption.getPrice() %>" readonly>원
 								</label>
@@ -264,8 +303,7 @@ function priceCalculation() {
 							<%} %>
 						</select>
 						<div class="pay">
-							<%int price = topCategory.getPrice(); %>
-							<p>총 결제 금액 : <input type="text" name="total_pay" style="width: 120px" value="<%=price %>" readonly> 원</p>
+							<p>총 결제 금액 : <input type="text" name="total_pay" style="width: 120px" value="" readonly> 원</p>
 						</div>	
 						<div style="margin-top: 20px; text-align: right;">
 							<button type="button" class="btn btn-default">결제</button>

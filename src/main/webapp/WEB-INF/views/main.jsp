@@ -25,13 +25,16 @@ function getList(){
 		return;
 	}
 
+	var checkin=getDateStringWithDate(form1.check_in.value);
+	var checkout=getDateStringWithDate(form1.check_out.value);
+
 	//예약 요청 
 	$.ajax({
 		url:"/rest/room",
 		type:"get",
 		data:{
-			check_in:$("input[name='check_in']").val(),
-			check_out:$("input[name='check_in']").val()
+			check_in:checkin,
+			check_out:checkout
 		},
 		success:function(result){
 			//alert(result);

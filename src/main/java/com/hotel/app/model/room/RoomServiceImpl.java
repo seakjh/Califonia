@@ -1,6 +1,7 @@
 package com.hotel.app.model.room;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hotel.app.aop.exception.DMLException;
 import com.hotel.app.aop.exception.FileException;
 import com.hotel.app.common.file.FileManager;
+import com.hotel.app.domain.Reservation;
 import com.hotel.app.domain.Room;
 import com.hotel.app.domain.SubCategory;
 import com.hotel.app.model.subcategory.SubCategoryDAO;
@@ -39,6 +41,14 @@ public class RoomServiceImpl implements RoomService {
 	public List selectAll() {
 		return subCategoryDAO.selectAll();
 	}
+	@Override
+	public List selectAll(Map prop) {
+		return subCategoryDAO.selectAll(prop);
+	}
+	@Override
+	public List selectAll(Reservation reservation) {
+		return subCategoryDAO.selectAll(reservation);
+	}
 
 	@Override
 	public List isReserveList() {
@@ -50,6 +60,7 @@ public class RoomServiceImpl implements RoomService {
 		return roomDAO.select(room_id);
 	}
 
+	//메인의 출력될 룸목록 가져오기 
 	@Override
 	public SubCategory selectJoin(int subcategory_id) {
 		return subCategoryDAO.select(subcategory_id);

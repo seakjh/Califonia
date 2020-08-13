@@ -17,17 +17,21 @@
 	</select>
 	
  	<select id="isReserveList" resultMap="joinMap">
-		
-
 	</select>
 
-	<select id="selectAll" resultMap="joinMap">
-		select * 	from subcategory order by subcategory_id desc
+	<select id="selectAll" parameterType="java.util.Map" resultType="SubCategory">
+		<![CDATA[ 
+			select * from subcategory where room_id not in (				
+			  select room_id from reservation 				
+			  where check_in >=to_date(#{check_in}, 'yyyy-mm-dd')  and check_out <= to_date(#{check_out}, 'yyyy-mm-dd')	
+			)		
+		]]>
 	</select>
 	
-	<select id="select" parameterType="int" resultMap="joinMap">
+	<!-- 메인에 출력될 룸목록 -->
+	<select id="select" parameterType="Reservation" resultMap="joinMap">
 		select * from subcategory 
-		where subcategory_id=#{subcategory_id}
+		where subcategory_id=#{subcategory_id}	
 	</select>	
 	
 	<insert id="insert" parameterType="SubCategory">
