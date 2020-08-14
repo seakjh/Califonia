@@ -28,6 +28,10 @@ public class OracleReservationDAO implements ReservationDAO {
 		return sessionTemplate.selectList("OracleReservation.selectAll");
 	}
 	
+	public List myReserve(int member_id) {
+		return sessionTemplate.selectList("OracleReservation.myReserve", member_id);
+	}
+	
 	public Reservation select(int reservation_id) {
 		return sessionTemplate.selectOne("OracleReservation.select", reservation_id);
 	}

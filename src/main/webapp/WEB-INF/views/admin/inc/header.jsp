@@ -1,6 +1,7 @@
+<%@page import="com.hotel.app.domain.Admin"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	//Admin admin=(Admin)session.getAttribute("admin");
+	Admin admin=(Admin)session.getAttribute("admin");
 %>
 
 <header>
@@ -35,7 +36,6 @@
 										</ul>
 									</li>
 									<li><a href="/admin/member">회원정보</a></li>
-									<li><a href="/admin/cs">고객문의</a></li>
 								</ul>
 							</nav>
 						</div>
@@ -43,8 +43,11 @@
 					<div class="col-xl-2 col-lg-2">
 						<!-- header-btn -->
 						<div class="header-btn">
-							<a href="/admin/login.jsp" class="btn btn1 d-none d-lg-block ">Login</a>
-							<!--<a><%//=admin.getName() %>님 로그인 중</a>-->
+							<%if (admin == null) {%>
+							<a href="/admin/signin" class="btn btn1 d-none d-lg-block ">Login</a>
+							<%} else { %>
+							<a href="/admin/logout" class="btn btn1 d-none d-lg-block ">Logout</a>
+							<%} %>
 						</div>
 					</div>
 					<!-- Mobile Menu -->

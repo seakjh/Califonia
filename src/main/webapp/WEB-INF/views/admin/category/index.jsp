@@ -137,8 +137,39 @@ const getDetail=(topcategory_id)=>()=> {
 	});
 }
 
+function edit() {
+	$.ajax({
+		url:"/category/edit",
+		type:"post",
+		data:{
+			topcategory_id:$("input[name='topcategory_id']").val(),
+			name:$($("input[name='name']")[1]).val(),
+			price:$($("input[name='price']")[1]).val(),
+			detail:$($("textarea[name='detail']")[1]).val()
+		},
+		success:function(result) {
+			alert("수정되었습니다");
+			getList();
+		}
+	});
+}
+
 function del() {
-	
+	$.ajax({
+		url:"/category/del",
+		type:"get",
+		data:{
+			topcategory_id:$("input[name='topcategory_id']").val()
+		},
+		success:function(result) {
+			alert("삭제되었습니다");
+			$("input[name='topcategory_id']").val("");
+			$($("input[name='name']")[1]).val("");
+			$($("input[name='price']")[1]).val("");
+			$($("textarea[name='detail']")[1]).val("");
+			getList();
+		}
+	});
 }
 </script>
 </head>

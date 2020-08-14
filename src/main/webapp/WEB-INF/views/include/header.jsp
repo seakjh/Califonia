@@ -1,5 +1,13 @@
+<%@page import="com.hotel.app.domain.Member"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-
+<%
+	Member member = (Member)session.getAttribute("member");
+%>
+<style type="text/css">
+html {
+    scroll-behavior: smooth;
+}
+</style>
     <header>
         <!-- Header Start -->
        <div class="header-area header-sticky">
@@ -17,22 +25,17 @@
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">                                                                                                                                     
-                                        <li><a href="/">소개</a></li>
-                                        <li><a href="/reserve/reserveTable.jsp">객실정보</a></li>
-                                        <li><a href="/member/myinfo.jsp">MyPage</a></a>
+                                       <!--  <li><a href="/">소개</a></li>
+                                        <li><a href="/reserve/reserveTable.jsp">객실정보</a></li> -->
+                                        <li><a href="#reserve">예약하기</a></li>
+                                        <li><a href="#contactMap">찾아오시는 길</a></li>
+                                        <!-- <li><a href="#reserve">문의하기</a></li> -->
+                                        <li><a href="#">MyPage</a></a>
                                             <ul class="submenu">
-                                                <li><a href="#">내정보</a></li>
-                                                <li><a href="#">예약정보</a></li>
+		                                        <li><a href="/member/info">내 정보</a></li>
+		                                        <li><a href="/member/reserve">예약정보</a></li>
                                             </ul>
                                         </li>
-                                        <!-- 
-                                        <li><a href="#">Pages</a>
-                                            <ul class="submenu">
-                                                <li><a href="rooms.html">Rooms</a>
-                                                <li><a href="elements.html">Element</a></li>
-                                            </ul>
-                                        </li>-->
-                                        <li><a href="/contact/contact.jsp">Contact</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -40,7 +43,11 @@
                         <div class="col-xl-2 col-lg-2">
                             <!-- header-btn -->
                             <div class="header-btn">
-                                <a href="/loginForm.html" class="btn btn1 d-none d-lg-block ">Login</a>
+								<%if (member == null) {%>
+								<a href="/member/loginForm" class="btn btn1 d-none d-lg-block ">Login</a>
+								<%} else { %>
+								<a href="/member/logout" class="btn btn1 d-none d-lg-block ">Logout</a>
+								<%} %>
                             </div>
                         </div>
                         <!-- Mobile Menu -->

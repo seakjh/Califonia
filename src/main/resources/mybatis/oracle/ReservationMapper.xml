@@ -8,7 +8,7 @@
 		<result column="reserve_date" property="reserve_date"/>
 		<result column="check_in" property="check_in"/>
 		<result column="check_out" property="check_out"/>
-		<association column="member_id" property="member" javaType="Member" select="OracleMember.select"/>
+		<association column="member_id" property="member" javaType="Member" select="Member.select"/>
 		<association column="room_id" property="room" javaType="Room" select="OracleRoom.select"/>
 		<association column="bed_option_id" property="bedOption" javaType="BedOption" select="OracleBedOption.select"/>
 		<association column="service_option_id" property="serviceOption" javaType="ServiceOption" select="OracleServiceOption.select"/>
@@ -22,6 +22,11 @@
 	<select id="select" parameterType="int" resultMap="joinMap">
 		select * from reservation 
 		where reservation_id=#{reservation_id}
+	</select>	
+	
+	<select id="myReserve" parameterType="int" resultMap="joinMap">
+		select * from reservation 
+		where member_id=#{member_id}
 	</select>	
 	
 	<insert id="insert" parameterType="Reservation">

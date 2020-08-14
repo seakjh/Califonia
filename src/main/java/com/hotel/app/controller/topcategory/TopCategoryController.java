@@ -34,7 +34,7 @@ public class TopCategoryController {
 	@RequestMapping(value="/category/regist", method=RequestMethod.POST)
 	@ResponseBody
 	public String regist(TopCategory topCategory) {
-		System.out.println("이름 : "+topCategory.getName());
+		logger.info("이름 : "+topCategory.getName());
 		topCategoryService.insert(topCategory);
 		return "1";
 	}
@@ -51,11 +51,11 @@ public class TopCategoryController {
 	@ResponseBody
 	public TopCategory select(@RequestParam("topcategory_id") int topcategory_id) {
 		logger.info("id : "+topcategory_id);
-		System.out.println(topCategoryService.select(topcategory_id));
+		logger.info("넘어온 고유키 "+topCategoryService.select(topcategory_id));
 		return topCategoryService.select(topcategory_id);
 	}
 
-	@RequestMapping(value = "/category/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/category/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public String update(TopCategory topCategory) {
 		topCategoryService.update(topCategory);
@@ -65,7 +65,7 @@ public class TopCategoryController {
 	@RequestMapping(value="/category/del",method=RequestMethod.GET)
 	@ResponseBody
 	public String delete(@RequestParam("topcategory_id") int topcategory_id) {
-		System.out.println(topcategory_id);
+		logger.info("넘어온 고유키 "+topcategory_id);
 		topCategoryService.delete(topcategory_id);
 		return "1";
 	}
@@ -74,7 +74,7 @@ public class TopCategoryController {
 	@ResponseBody //페이지를 보여주는게 아닌, 데이터만 전송할경우
 	public String handle(DMLException e) {
 		e.printStackTrace();
-		System.out.println("에러 발견!!");
+		logger.info("에러 발견!!");
 		return "0";
 	}
 }	

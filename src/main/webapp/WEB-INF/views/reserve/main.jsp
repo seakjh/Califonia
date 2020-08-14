@@ -173,7 +173,7 @@ function serviceCalculation(obj) {
     <main>
 		<div class="container paint">
 			<form>
-				<input type="hidden" name="member.member_id" value="1"> 
+				<input type="hidden" name="member.member_id" value="<%=member.getMember_id()%>"> 
 				<input type="hidden" name="room.room_id" value="<%=room.getRoom_id()%>"> 
 				<div class="row">
 					<div class="col-lg-6">

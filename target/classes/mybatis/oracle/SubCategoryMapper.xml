@@ -20,11 +20,11 @@
  		select * from subcategory order by subcategory_id desc
 	</select>
 
-	<select id="selectAll" parameterType="java.util.Map" resultMap="joinMap">
+	<select id="selectAll" parameterType="Reservation" resultMap="joinMap">
 		<![CDATA[ 
 			select * from subcategory where room_id not in (				
 			  select room_id from reservation 				
-			  where check_in >=to_date(#{check_in}, 'yyyy-mm-dd')  and check_out <= to_date(#{check_out}, 'yyyy-mm-dd')	
+			  where check_in >=#{check_in} and check_out <= #{check_out}
 			)		
 		]]>
 	</select>

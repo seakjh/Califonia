@@ -41,6 +41,7 @@ public class RoomServiceImpl implements RoomService {
 	public List selectAll() {
 		return subCategoryDAO.selectAll();
 	}
+	//메인의 출력될 룸목록 가져오기 
 	@Override
 	public List selectAll(Map prop) {
 		return subCategoryDAO.selectAll(prop);
@@ -60,7 +61,6 @@ public class RoomServiceImpl implements RoomService {
 		return roomDAO.select(room_id);
 	}
 
-	//메인의 출력될 룸목록 가져오기 
 	@Override
 	public SubCategory selectJoin(int subcategory_id) {
 		return subCategoryDAO.select(subcategory_id);

@@ -83,12 +83,12 @@ public class RoomController {
 		logger.info("들어옴? "+check_in+","+check_out);
 		
 		//roomService.isReserveList(); 예약가능한 방 
-		Map<String,Date> prop = new HashMap<String, Date>();
-		Date in_date =new Date(2020,8,1);
-		Date out_date =new Date(2020,8,7);
-		
-		prop.put("check_in", in_date);
-		prop.put("check_out", out_date);
+//		Map<String,Date> prop = new HashMap<String, Date>();
+//		Date in_date =new Date(2020,8,1);
+//		Date out_date =new Date(2020,8,7);
+//		
+//		prop.put("check_in", in_date);
+//		prop.put("check_out", out_date);
 		
 		List categoryList = roomService.selectAll(reservation);
 		

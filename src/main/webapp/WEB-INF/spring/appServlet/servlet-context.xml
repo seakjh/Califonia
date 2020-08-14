@@ -32,4 +32,31 @@
 	
 	<beans:bean id="pager" class="com.hotel.app.common.pager.Pager"/>
 	
+	<!-- 관리자 로그인 체크 빈 객체 등록 -->
+	<beans:bean class="com.hotel.app.aop.AdminSessionCheckAspect" id="adminSessionCheckAspect"/>
+	<beans:bean class="com.hotel.app.aop.MemberSessionCheckAspect" id="memberSessionCheckAspect"></beans:bean>
+	
+	<!-- 관리자 세션체크 -->
+	<aop:config>
+		<aop:aspect ref="adminSessionCheckAspect">
+			<aop:pointcut expression="execution(public * com.hotel.app.controller.admin..AdminController.*(..))" id="adminPointcut"/>
+			<aop:around method="sessionCheck" pointcut-ref="adminPointcut"/>			
+		</aop:aspect>
+	</aop:config> 
+	
+ 	<!-- 회원 세션 체크 -->
+	<aop:config>
+		<aop:aspect ref="memberSessionCheckAspect">
+			<aop:pointcut 
+				expression="execution(public * com.hotel.app.controller.reserve.ReserveController.goMyReserve(..))  
+				|| execution(public * com.hotel.app.controller.reserve.ReserveController.regist(..)) 
+				|| execution(public * com.hotel.app.controller.member.MemberController.goMyInfo(..))" 
+				id="memberPointcut"/>
+			<aop:around method="sessionCheck" pointcut-ref="memberPointcut"/>			
+		</aop:aspect>
+	</aop:config>	
+	
+	<!-- 글로벌 예외처리 핸들러 -->	
+	<beans:bean class="com.hotel.app.controller.common.GlobalExceptionHandler"/>
+	
 </beans:beans>

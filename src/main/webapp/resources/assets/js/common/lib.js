@@ -28,7 +28,7 @@ function getDateStringWithDate(dateString){
 	return yy+"-"+mm+"-"+dd;
 }
 
-function getDiffDate( a , b){
+function getDiffDate(a , b){
 	const date1 = new Date(a);
 	const date2 = new Date(b);
 	const diffTime = Math.abs(date2 - date1);

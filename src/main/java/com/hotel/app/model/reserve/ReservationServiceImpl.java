@@ -21,6 +21,11 @@ public class ReservationServiceImpl implements ReservationService {
 	public List selectAll() {
 		return reservationDAO.selectAll();
 	}
+	
+	@Override
+	public List myReserve(int member_id) {
+		return reservationDAO.myReserve(member_id);
+	}
 
 	@Override
 	public Reservation select(int reservation_id) {

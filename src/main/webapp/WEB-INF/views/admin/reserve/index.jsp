@@ -1,10 +1,9 @@
-<%@page import="com.hotel.app.domain.TopCategory"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>예약 주문 결제 목록</title>
 <link rel="stylesheet" href="/resources/assets/css/admin.css"/>
 <%@include file="../inc/head.jsp"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -56,19 +55,12 @@ button:hover {
 $(function(){
 	getList();
 	
-	$($("button")[0]).click(function(){//등록
-		regist();
-	});
 });
-
-function regist() {
-	location.href="/admin/room/registRoom";
-}
 
 //목록 가져와서 테이블에 출력!
 function getList() {
     $.ajax({
-        url:"/admin/room/getList",
+        url:"/admin/reserve/list",
         type:"get",
         success:function(result) {
             //alert(result.length);            
@@ -77,20 +69,21 @@ function getList() {
     });
 }
 function printData(jsonArray){
-	class RoomTable extends React.Component{
+	class ReserveTable extends React.Component{
 		render(){
 			var row=[];
 			
 			for(var i=0;i<jsonArray.length;i++){
-				var sub=jsonArray[i];
+				var reservation=jsonArray[i];
 				row.push(
-					<tr onClick={getDetail(sub.room.room_id)}>						
-						<td>{sub.room.room_id}</td>
-						<td>{sub.topCategory.name}</td>
-						<td>{sub.room.name}</td>
-						<td>{sub.room.max_number}</td>
-						<td>{sub.room.room_size}평</td>
-						<td><img src={"/resources/data/"+sub.room.filename} alt="방의 이미지" width="100px" /></td>
+					<tr onClick={getDetail(reservation.reservation_id)}>						
+						<td>{reservation.reservation_id}</td>
+						<td>{reservation.member.name}</td>
+						<td>{reservation.room.name}</td>
+						<td>{reservation.total_pay}원</td>
+						<td>{reservation.reserve_date}</td>
+						<td>{reservation.check_in}</td>
+						<td>{reservation.check_out}</td>
 					</tr>
 				)
 			}
@@ -98,18 +91,19 @@ function printData(jsonArray){
 				<table width="100%" border="1px">		
 					<tr>
 						<td>고유번호</td>
-						<td>카테고리</td>
-						<td>이름</td>
-						<td>최대 인원수</td>
-						<td>방 크기</td>
-						<td>이미지</td>
+						<td>예약자</td>
+						<td>예약룸</td>
+						<td>총 결제액</td>
+						<td>예약일</td>
+						<td>체크인</td>
+						<td>체크아웃</td>
 					</tr>
 					{row}					
 				</table>
 			)	
 		}
 	}
-	ReactDOM.render( <RoomTable/>, $("#tableArea")[0]);
+	ReactDOM.render( <ReserveTable/>, $("#tableArea")[0]);
 }
 function getDetail(room_id) {
 	$.ajax({
@@ -132,7 +126,7 @@ function getDetail(room_id) {
 		<div class="col-lg-12" id="contentArea">
 			<div id="tableArea"></div>
 			<br>
-			<button>방 등록</button>
+			<!-- <button>결제 취소</button> -->
 		</div>
 	</div>
 </div>

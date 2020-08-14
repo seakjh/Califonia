@@ -8,8 +8,8 @@
 <body>
 <%@include file="./inc/header.jsp"%>
 
-<div style="height: 400px;">
-
+<div class="container" style="height: 400px;">
+관리자님 반갑습니다
 </div>
 
 <%@include file="./inc/footer.jsp"%>
